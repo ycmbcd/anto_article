@@ -1,0 +1,130 @@
+
+<style>
+  .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+  /*日期样式*/
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
+
+<div  ng-controller="plugCtrl" style="margin:20px 300px 200px 300px;">
+<!-- 运行 -->
+运行状态：{{ok}}
+<hr>
+
+  <uib-accordion close-others="oneAtATime" >
+
+    <div uib-accordion-group class="panel-default">
+      <uib-accordion-heading>
+        1 
+      </uib-accordion-heading>
+      111
+    </div>
+    <div uib-accordion-group class="panel-default">
+      <uib-accordion-heading>
+        2 
+      </uib-accordion-heading>
+      222
+    </div>
+  </uib-accordion>
+<!-- alert -->
+<div uib-alert ng-repeat="alert in alerts" dismiss-on-timeout='3000' ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
+<button type="button" class='btn btn-default' ng-click="addAlert()">新建 Alert</button>
+<hr>
+<!-- button -->
+<h4>是否多选</h4>
+<pre>{{singleModel}}</pre>
+<button type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+    Single Toggle
+</button>
+<h4>操作：</h4>
+<pre>Model: {{checkModel}}</pre>
+<pre>Results: {{checkResults}}</pre>
+<div class="btn-group">
+    <label class="btn btn-primary" ng-model="checkModel.left" uib-btn-checkbox>Left</label>
+    <label class="btn btn-primary" ng-model="checkModel.middle" uib-btn-checkbox>Middle</label>
+    <label class="btn btn-primary" ng-model="checkModel.right" uib-btn-checkbox>Right</label>
+</div>
+<h4>Radio &amp; Uncheckable Radio</h4>
+<pre>{{radioModel || 'null'}}</pre>
+<div class="btn-group">
+    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Left'">Left</label>
+    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Middle'">Middle</label>
+    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Right'">Right</label>
+</div>
+<div class="btn-group">
+    <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Left'" uncheckable>Left</label>
+    <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Middle'" uncheckable>Middle</label>
+    <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Right'" uib-uncheckable="uncheckable">Right</label>
+</div>
+<div>
+    <button class="btn btn-default" ng-click="uncheckable = !uncheckable">
+        Toggle uncheckable
+    </button>
+</div>
+<hr>
+<!-- 折叠 Collapse -->
+<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">垂直折叠</button>
+<div uib-collapse="isCollapsed">
+  <div class="well well-lg">Some content</div>
+</div>
+<hr>
+<button type="button" class="btn btn-default" ng-click="isCollapsedHorizontal = !isCollapsedHorizontal">横向折叠</button>
+<div uib-collapse="isCollapsedHorizontal" horizontal>
+  <div class="well well-lg">Some content</div>
+</div>
+<hr>
+<!-- 日期时间 -->
+<p class="input-group">
+  <input type="text" readonly class="form-control" current-text="今天" close-text="关闭" clear-text="清除" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" popup-placement="top-right" />
+  <span class="input-group-btn">
+      <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+  </span>
+</p>
+<select class="form-control" ng-model="format" ng-options="f for f in formats"><option>0</option></select>
+<hr>
+<!-- 下拉菜单 -->
+<div class="btn-group" uib-dropdown is-open="status.isopen">
+  <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+    <span class="drop_val">{{click_key}}</span>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+    <li role="menuitem"><a href ng-click="click_me('1')">1</a></li>
+    <li role="menuitem"><a href ng-click="click_me('2')">2</a></li>
+    <li role="menuitem"><a href ng-click="click_me('3')">3</a></li>
+  </ul>
+</div>
+<hr>
+<!-- 模态框 -->
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">I'm a modal!</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+<button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
+<button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
+<button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
+<div ng-show="selected">Selection from a modal: {{ selected }}</div>
+</div>

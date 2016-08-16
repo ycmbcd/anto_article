@@ -1,0 +1,321 @@
+@charset "UTF-8";
+*{
+	font-family: "微软雅黑";
+}
+body{
+	overflow-y:auto;
+	background: #eee;
+}
+td{
+	vertical-align: middle !important;
+}
+a{
+	color:#dedede;
+}
+a:hover{
+	color:#dedede;
+}
+/*image{display: block;border:none;}*/
+.bg_image{background: url('/images/bg1.jpg') no-repeat center center fixed;background-size:cover;}
+.error{
+	background: #ffcdba}
+.f14{
+	font-size: 14px !important;
+}
+.f12{
+	font-size: 12px !important;
+}
+.tagc{
+	text-align: center;
+}
+.tagr{
+	text-align: right;
+}
+.bg_opacity{
+	background:rgba(0,0,0,0.3);
+}
+.gray{
+	color: #dedede;
+}
+.auto{
+	margin:0 auto;
+}
+.ml10{
+	margin-left:10px;
+}
+.mr10{
+	margin-right:10px;
+}
+.mt10{
+	margin-top:10px;
+}
+.ml20{
+	margin-left:20px;
+}
+.mt20{
+	margin-top:20px;
+}
+.mr20{
+	margin-right:20px;
+}
+.bdr_no{
+	border-radius: 0px !important;
+}
+.pointer{
+	cursor: pointer;
+}
+.green{
+	color:green;
+}
+.red{
+	color:#c80e00;
+}
+.weight{
+	font-weight: bold;
+}
+.bdr4{
+	border-radius:4px !important;
+}
+.readonly{
+	border:none;
+}
+.btns_info{
+	top:10px;
+	right:66px;
+}
+
+/* 旋转 */
+.scroll_0{
+	-webkit-transition: -webkit-transform .5s ease-out;
+	-moz-transition: -moz-transform .5s ease-out;
+	-o-transition: -o-transform .5s ease-out;
+	-ms-transition: -ms-transform .5s ease-out;
+	-webkit-transform: rotateZ(0deg);
+	-moz-transform: rotateZ(0deg);
+	-o-transform: rotateZ(0deg);
+	-ms-transform: rotateZ(0deg);
+	transform: rotateZ(0deg);
+}
+.scroll_90{
+	-webkit-transition: -webkit-transform .5s ease-out;
+	-moz-transition: -moz-transform .5s ease-out;
+	-o-transition: -o-transform .5s ease-out;
+	-ms-transition: -ms-transform .5s ease-out;
+	-webkit-transform: rotateZ(90deg);
+	-moz-transform: rotateZ(90deg);
+	-o-transform: rotateZ(90deg);
+	-ms-transform: rotateZ(90deg);
+	transform: rotateZ(90deg);
+}
+
+
+
+/* 页脚 */
+#header_txt{
+	line-height:50px;
+	font-size:18px;
+	margin-left:15px;
+}
+#footer_txt{
+	line-height:50px;
+	font-size:14px;
+	font-style:italic;
+	margin-right:20px;
+}
+
+/* 登陆 */
+#login_box{
+    margin-top: 40%;
+    width:60%;
+    border-color:#7d7d7d;
+}
+#login_btn{
+	width:100%;
+	border-top-left-radius:0;
+	border-top-right-radius:0;
+	border:none;
+	font-size:20px;
+}
+
+/* show */
+#user_box{
+	margin:8px 0;
+}
+#user_logo{
+	margin:10px;
+	margin-left: 20px;
+	width:70px;
+}
+
+#user_info{
+	margin:20px 0 0 10px;
+	color:#eee;
+}
+#user_info a{
+	color:#b1b1b1;
+	font-size: 10px;
+}
+#user_info span{
+	font-size: 10px;
+}
+#user_info a:hover{
+	color:#5DAF9D;
+}
+.container-show{
+	padding-left: 200px;
+	margin-left:auto;
+	margin-right:auto;
+}
+.tools_bar{
+	background: #5daf9d;}
+
+/* sidebar */
+#side_bar{
+	background: url('/images/bg1.jpg') no-repeat center center fixed;background-size:cover;
+	width:200px;
+	position: fixed;
+	padding:0;
+	z-index: 100;
+    top: -1px;
+    bottom: -1px;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #eff7ff;
+    border: 1px solid rgba(0, 0, 0, .15);
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    border-right: none;
+    border-left: none;
+    overflow-y:auto;
+    overflow-x: hidden;
+}
+
+#side_bar .list-group-item{
+	background: #eee;
+	border:none;
+	margin-bottom: 1px;
+	border-radius: 0 !important;
+}
+#side_bar .active{
+    background-image: -webkit-linear-gradient(top,#36a38b 0,#36a38b 100%) !important;
+    background-image: -o-linear-gradient(top,#36a38b 0,#36a38b 100%) !important;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#36a38b),to(#36a38b)) !important;
+    background-image: linear-gradient(to bottom,#36a38b 0,#36a38b 100%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff2b669a', GradientType=0) !important;
+    background-repeat: repeat-x !important;
+    color:#FFF !important;
+}
+#side_bar .active .text-muted{
+	color:#FFF;
+}
+#side_bar .panel{
+	margin-top: 0px;
+	border-bottom:0px solid #000;
+}
+#side_bar .panel-heading{
+	border-radius: 0 !important;
+	background: #F7F7F7;
+}
+#side_bar .panel-body .list-group-item{
+	font-size: 13px;
+	padding-left: 24px;
+}
+#side_bar .hover{
+	cursor: pointer;
+}
+#side_bar .panel-heading:hover,#side_bar .list-group-item:hover{
+	background: #FFF;
+	color:#333;
+}
+#side_bar .panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .panel-heading + .panel-collapse > .list-group {
+    border-top: 1px solid #dedede;
+}
+#side_bar a{
+	color:#439885;
+	font-size: 14px;
+	text-decoration: none;
+}
+#side_bar .text-muted{
+	color:#333;
+}
+
+.popover_tips{
+	font-size: 12px;
+	padding-bottom: 6px;
+	font-style: italic;
+}
+
+#side_bar .panel-body{
+	padding:0;
+}
+#side_bar .panel-group .panel{
+	border-radius: 0;
+}
+
+/* panel-show */
+.panel-show {
+    border-color: #5daf9d;
+}
+.panel-show>.panel-heading {
+    background-image: -webkit-linear-gradient(top,#7abfb0 0,#6eb7a7 100%);
+    background-image: -o-linear-gradient(top,#7abfb0 0,#6eb7a7 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#7abfb0),to(#6eb7a7));
+    background-image: linear-gradient(to bottom,#7abfb0 0,#6eb7a7 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff2dede', endColorstr='#ffebcccc', GradientType=0);
+    background-repeat: repeat-x;
+    border-bottom: none;
+}
+.panel-show > .panel-heading {
+    color: #155748;
+    border-color: #105545;
+}
+.panel-show > .panel-show {
+    color: #155748;
+    background-color: #5daf9d;
+    border-color: #ebccd1;
+}
+
+/*alert*/
+.alert{
+	position: fixed;
+	bottom: 2px;
+	right:20px;
+	animation: fade-in;/*动画名称*/  
+    animation-duration: .3s;/*动画持续时间*/  
+    -webkit-animation:fade-in .3s;/*针对webkit内核*/  
+}
+#alert_icon{
+	font-size: 20px;
+    position: fixed;
+    margin-left: -30px;
+    margin-top: 1px;
+}
+
+/*fadeIn*/
+@keyframes fade-in {  
+    0% {opacity: 0;}/*初始状态 透明度为0*/  
+    40% {opacity: 0;}/*过渡状态 透明度为0*/  
+    100% {opacity: 1;}/*结束状态 透明度为1*/  
+}  
+@-webkit-keyframes fade-in {/*针对webkit内核*/  
+    0% {opacity: 0;}  
+    40% {opacity: 0;}  
+    100% {opacity: 1;}  
+}  
+
+/*伸缩箭头*/
+.toggler{
+	width:20px;
+	height:20px;
+	position: fixed;
+	top:45%;
+	margin-left: 200px;
+	border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-left: 0px solid #effffa;
+    -webkit-box-shadow: 1px 0px 8px rgba(0, 0, 0, .175);
+    box-shadow: 1px 0px 8px rgba(0, 0, 0, .175);
+    border: 1px solid rgba(0, 0, 0, .15);
+    width: 20px;
+    height: 48px;
+}

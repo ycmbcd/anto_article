@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="navbar bdr_no gray bg_opacity">
+      <div id="header_txt">
+        <span class="glyphicon glyphicon-screenshot"></span>
+        ANTO - CONTENT MANAGEMENT SYSTEM
+      </div>
+    </nav>
+  </div>
+
+  <div class="row" ng-controller="loginCtrl">
+    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+      <form name="loginForm">
+        <div class="panel bg_opacity panel-default auto" id="login_box">
+          <div class="panel-body">
+            <div class="input-group auto mt10 ml20 mr20 ">
+              <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-user"></span>
+              </span>
+              <input  type="text"
+                      placeholder="工号" 
+                      ng-model="u_num" 
+                      name="u_num" 
+                      required   
+                      maxlength="4" 
+                      ng-maxlength="4"
+                      ng-class="{'error':loginForm.u_num.$invalid && loginForm.u_num.$touched}"
+                      class="form-control login_input">   
+            </div>
+            <div class="input-group auto mr20 ml20 mt20">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-lock"></span>
+              </span>
+              <input  type="password" 
+                      placeholder="密码"
+                      ng-model="u_pwd"
+                      name="u_pwd" 
+                      required
+                      ng-class="{'error':loginForm.u_pwd.$invalid && loginForm.u_pwd.$touched}"
+                      class="form-control login_input"></div>
+          </div>
+          <div id="login_btn" class="btn mt10 btn-danger" ng-click="save()">登&nbsp;&nbsp;&nbsp;录</div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    <nav class="navbar bg_opacity navbar-default navbar-fixed-bottom" style=" border-top:none;">
+      <div id="footer_txt" class="pull-right gray">
+        <span class="glyphicon glyphicon-education"></span>
+        Powered by ycmbcd &amp; pd
+      </div>
+    </nav>
+  </div>
+</div>
