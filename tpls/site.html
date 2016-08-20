@@ -3,7 +3,6 @@
 		<div ui-view="sidebar"></div>
 		<div ui-view="show" class="container-show"><h1>欢迎使用 Angular UI Router</h1></div>
 	</div>
-
 	<!-- alert消息弹框 -->
 	<div uib-alert ng-repeat="alert in alerts" dismiss-on-timeout='2000' ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)"><div id="alert_icon" class="{{alerts.icon}}"></div>{{alert.msg}}</div>
 

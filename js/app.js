@@ -54,25 +54,91 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+    //模板管理
+        //通用字段
+        .state('site.commonfield',{
+            url: '/commonfield/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/field/commonfield.html'
+                }
+            }
+        })
+        //雅虎字段
+        .state('site.yahoofield',{
+            url: '/yahoofield/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/field/yahoofield.html'
+                }
+            }
+        })
+        //乐天字段
+        .state('site.rakutenfield',{
+            url: '/rakutenfield/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/field/rakutenfield.html'
+                }
+            }
+        })
+        //亚马逊字段
+        .state('site.amazonfield',{
+            url: '/amazonfield/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/field/amazonfield.html'
+                }
+            }
+        })
 
+    //系统设置
+        //表单管理
+        .state('site.systable',{
+            url: '/systable/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/sysconf/systable.html'
+                }
+            }
+        })
+        //文件夹管理
         .state('site.sysfolder',{
             url: '/sysfolder/{data}',
             views:{
                 'show@site':{
-                    templateUrl: 'tpls/sysfolder.html'
+                    templateUrl: 'tpls/sysconf/sysfolder.html'
                 }
             }
         })
-
-        .state('site.systable',{
-            url: '/systable',
+        //账号管理
+        .state('site.sysuser',{
+            url: '/sysuser/{data}',
             views:{
                 'show@site':{
-                    templateUrl: 'tpls/systable.html'
+                    templateUrl: 'tpls/sysconf/sysuser.html'
                 }
             }
         })
-
+        //系统备份
+        .state('site.syscopy',{
+            url: '/syscopy/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/sysconf/syscopy.html'
+                }
+            }
+        })
+        //系统日志
+        .state('site.syslog',{
+            url: '/syslog/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/sysconf/syslog.html'
+                }
+            }
+        })
+        //轮子
         .state('site.modal',{
             url: '/modal',
             views:{
@@ -81,6 +147,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+
 
         .state('page', {
             url: '/page/{show}',

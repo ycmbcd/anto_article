@@ -10,12 +10,21 @@
 	</div>
 
 	<uib-accordion close-others="oneAtATime" >
-		<div uib-accordion-group is-open="status.isopen0" class="panel-default hover">
+		<div uib-accordion-group is-open="status.isopen3" class="panel-default hover">
 			<uib-accordion-heading>
-        		文件夹1<i class="pull-right icon-folder-close-alt" ng-class="{'icon-folder-open-alt': status.isopen0}"></i>
+        		商品管理<i class="pull-right icon-circle-blank" ng-class="{'icon-spin icon-spinner': status.isopen3}"></i>
      	 	</uib-accordion-heading>
-			<div ui-sref-active="active" class="list-group-item">
-				xxx
+			<div  ui-sref-active="active" class="list-group-item">
+				新建商品<i class="pull-right icon-plus"></i>
+			</div>
+			<div  ui-sref-active="active" class="list-group-item">
+				商品编辑<i class="pull-right icon-edit"></i>
+			</div>
+			<div  ui-sref-active="active" class="list-group-item">
+				商品出品<i class="pull-right icon-gift"></i>
+			</div>
+			<div  ui-sref-active="active" class="list-group-item">
+				商品回收站<i class="pull-right icon-trash"></i>
 			</div>
 		</div>
 		<div ng-repeat="folder_table in folder_all">
@@ -25,7 +34,7 @@
 	     	 	</uib-accordion-heading>
 	     	 	<div ng-repeat="tb in folder_table.tbname track by $index">
 					<div ui-sref-active="active" class="list-group-item">
-						{{tb}}
+						{{tb}}<i class="pull-right icon-table"></i>
 					</div>
 				</div>
 			</div>
@@ -35,8 +44,17 @@
 			<uib-accordion-heading>
         		模板管理<i class="pull-right icon-screenshot" ng-class="{'icon-spin': status.isopen1}"></i>
      	 	</uib-accordion-heading>
-			<div  ui-sref-active="active" class="list-group-item">
-				固定字段
+			<div ui-sref="site.commonfield" ui-sref-active="active" class="list-group-item">
+				通用字段<i class="pull-right icon-exchange"></i>
+			</div>
+			<div ui-sref="site.yahoofield" ui-sref-active="active" class="list-group-item">
+				雅虎字段<i class="pull-right">Yahoo</i>
+			</div>
+			<div ui-sref="site.rakutenfield" ui-sref-active="active" class="list-group-item">
+				乐天字段<i class="pull-right">Rakuten</i>
+			</div>
+			<div ui-sref="site.amazonfield" ui-sref-active="active" class="list-group-item">
+				亚马逊字段<i class="pull-right">Amazon</i>
 			</div>
 		</div>
 		<div uib-accordion-group is-open="status.isopen2" class="panel-default hover">
@@ -44,10 +62,19 @@
         		系统设置<i class="pull-right icon-cog" ng-class="{'icon-spin': status.isopen2}"></i>
      	 	</uib-accordion-heading>
 			<div ui-sref="site.systable" ui-sref-active="active" class="list-group-item">
-				表单管理<i class="pull-right icon-table" ></i>
+				表单管理<i class="pull-right icon-list-ul" ></i>
 			</div>
 			<div ui-sref="site.sysfolder" ui-sref-active="active" class="list-group-item">
-				文件夹管理<i class="pull-right icon-inbox" ></i>
+				文件夹管理<i class="pull-right icon-folder-open" ></i>
+			</div>
+			<div ui-sref="site.sysuser" ui-sref-active="active" class="list-group-item">
+				账号管理<i class="pull-right icon-user" ></i>
+			</div>
+			<div ui-sref="site.syscopy" ui-sref-active="active" class="list-group-item">
+				系统备份<i class="pull-right icon-save" ></i>
+			</div>
+			<div ui-sref="site.syslog" ui-sref-active="active" class="list-group-item">
+				系统日志<i class="pull-right icon-file-alt" ></i>
 			</div>
 			<div ui-sref="site.modal" ui-sref-active="active" class="list-group-item">
 				轮子<i class="pull-right icon-magic" ></i>

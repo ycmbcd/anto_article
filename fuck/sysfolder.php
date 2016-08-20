@@ -1,15 +1,7 @@
 <?php
-//开启session
-session_start();
-@$u_name = $_SESSION['u_name'];
-if($u_name==''){
-	echo '请登录后再试。1秒钟后跳转...<meta http-equiv="refresh" content="2;url=/index.html" />';die;
-}
-
 $dir = dirname(__FILE__);
-require_once($dir."/../pdo/PdoMySQL.class.php");//PDO
+require_once($dir."/./header.php");
 
-$db = new PdoMySQL();
 //查询文件夹（包括表单）用于侧栏展示
 if(isset($_GET['folder_all'])){
     $sql = "SELECT folder.id,folder.folder_name,group_concat(table_name ORDER BY folder_table.id DESC separator ',')AS tbname FROM folder_table, folder WHERE folder_table.folder_id=folder.id GROUP BY folder.folder_name ORDER BY folder.id DESC";
@@ -43,9 +35,9 @@ if(isset($_POST['new_folder'])){
     $sql = "SELECT id FROM folder WHERE folder_name='{$new_folder}'";
     $res = $db->getOne($sql);
     $folder_id = $res['id'];
-    //插入默认表单(仅供占位)
-    $sql = "INSERT INTO folder_table (table_name,folder_id) VALUES ('***','{$folder_id}')";
-    $res = $db->execute($sql);
+    // //插入默认表单(仅供占位)
+    // $sql = "INSERT INTO folder_table (table_name,folder_id) VALUES ('***','{$folder_id}')";
+    // $res = $db->execute($sql);
     echo "ok";
 }
 
@@ -73,7 +65,7 @@ if(isset($_POST['del_folder'])){
     $sql = "SELECT id FROM folder WHERE folder_name='{$del_folder}'";
     $res = $db->getOne($sql);
     $folder_id = $res['id'];
-    $sql = "SELECT * FROM folder_table WHERE folder_id='{$folder_id}' AND table_name<>'***'";
+    $sql = "SELECT * FROM folder_table WHERE folder_id='{$folder_id}'";
     $res = $db->getOne($sql);
     if(empty($res)){
         $sql = "DELETE FROM folder WHERE folder_name='{$del_folder}'";

@@ -21,7 +21,7 @@ app.controller('loginCtrl', ['$rootScope','$scope','$state','$http',function ($r
                 if(data=='go'){
                     $state.go('site');  //跳转到main
                 }else{
-                    alert('数据验证失败')     // %
+                    alert('用户名或密码不正确'); //%
                 }
             }).error(function(data) {  
                 alert("系统错误，请联系管理员。")   // %
@@ -45,8 +45,7 @@ app.controller('siteCtrl', ['$rootScope','$scope','$state','$http', function($ro
             $scope.u_name = data;
         }
     }).error(function(data) {
-        alert(data)
-        alert("系统错误，请联系管理员。") // %
+        alert("系统错误，请联系管理员。");
     });
 
     //查询文件夹
@@ -88,7 +87,7 @@ app.controller('siteCtrl', ['$rootScope','$scope','$state','$http', function($ro
 }])
 
 //文件夹管理
-app.controller('folderCtrl', ['$scope','$state','$http', function($scope,$state,$http){
+app.controller('folderCtrl', ['$rootScope','$scope','$state','$http', function($rootScope,$scope,$state,$http){
     $scope.plug_dropdown(); //调用下拉
     
     //新建文件夹名
@@ -102,8 +101,9 @@ app.controller('folderCtrl', ['$scope','$state','$http', function($scope,$state,
             if(data=='ok'){
                 $scope.plug_alert('success','文件夹 '+$scope.new_folder+' 添加完成。','icon-ok');
                 $state.go('site.sysfolder',{data:time});
+                $scope.select_folder_all(); //重新加载侧栏
             }else{
-                $scope.plug_alert('danger','文件夹名 '+$scope.new_folder+' 已存在，请输入其他的名称。','icon-ban-circle');
+                $scope.plug_alert('danger','文件夹名 '+$scope.new_folder+' 已存在，请输入其它的名称。','icon-ban-circle');
             }
         }).error(function(data) {  
             alert("系统错误，请联系管理员。");
@@ -112,7 +112,7 @@ app.controller('folderCtrl', ['$scope','$state','$http', function($scope,$state,
 
     //重命名
     $scope.rename_popover = {
-        title: '重命名',
+        title: '文件夹重命名',
         templateUrl: 'rename_popover.html'
     };
     $scope.rename_folder = function(){
@@ -168,7 +168,6 @@ app.controller('tableCtrl', ['$scope','$state','$http', function($scope,$state,$
 
     //新建表单
     $scope.add_table = function(){
-        var time=new Date().getTime();
         if($scope.new_table==undefined){
             return false;
         }
@@ -178,8 +177,10 @@ app.controller('tableCtrl', ['$scope','$state','$http', function($scope,$state,$
             if(data=='ok'){
                 $scope.plug_alert('success','表单 '+$scope.new_table+' 添加完成。','icon-ok');
                 $scope.select_table($scope.click_key,$scope.click_id);  //查询表单
+                $scope.select_folder_all(); //重新加载侧栏
+                $scope.new_table = '';
             }else if(data=='has'){
-                $scope.plug_alert('danger','此文件夹中包含 '+$scope.new_table+' 表单，请输入其他的名称。','icon-ban-circle');
+                $scope.plug_alert('danger','此文件夹中包含 '+$scope.new_table+' 表单，请输入其它的名称。','icon-ban-circle');
             }else{
                 $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
             }
@@ -187,5 +188,153 @@ app.controller('tableCtrl', ['$scope','$state','$http', function($scope,$state,$
             alert("系统错误，请联系管理员。");
         });
     }
+
+    //table_key
+    $scope.table_key = function(e){
+        $scope.table_key_click = e;
+    }
+
+    //重命名
+    $scope.rename_popover = {
+        title: '表单重命名',
+        templateUrl: 'rename_popover.html'
+    };
+    $scope.rename_table = function(){
+        if($scope.rename_popover.re_table==undefined){
+            return false;
+        }
+        var post_data = {re_table:$scope.rename_popover.re_table,click_key:$scope.table_key_click,folder_id:$scope.click_id};
+        $http.post('/fuck/systable.php', post_data).success(function(data) {
+            if(data=='ok'){
+                $scope.plug_alert('success','表单已改为 '+$scope.rename_popover.re_table+' 。','icon-ok');          
+                $scope.select_table($scope.click_key,$scope.click_id); 
+                $scope.rename_popover.re_table="";
+                $scope.select_folder_all(); //重新加载侧栏
+                var dom = document.querySelector('.popover');
+                angular.element(dom).removeClass('in');  //移除popover
+            }else if(data=='has'){
+                $scope.plug_alert('danger','表单 '+$scope.rename_popover.re_table+' 已存在。','icon-ban-circle');
+                $scope.rename_popover.re_table="";
+            }else{
+                $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        });  
+    }
+
+    //删除
+    $scope.del_popover = {
+        title: '删除 ?',
+        templateUrl: 'del_popover.html'
+    };
+    $scope.del_table = function(){
+        var post_data = {del_table_id:$scope.table_key_click};
+        $http.post('/fuck/systable.php', post_data).success(function(data) {  
+            if(data=='ok'){
+                $scope.plug_alert('success',' 删除完成。','icon-ok');
+                $scope.select_table($scope.click_key,$scope.click_id); 
+                $scope.select_folder_all(); //重新加载侧栏
+                var dom = document.querySelector('.popover');
+                angular.element(dom).removeClass('in');  //移除popover
+            }else{
+                $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        });  
+    }
+
 }])
 
+//通用字段
+app.controller('commonfieldCtrl', ['$scope','$state','$http', function($scope,$state,$http){
+    //查询通用字段
+    $http.get('/fuck/field/commonfield.php', {params:{select_comfield:"get"}
+    }).success(function(data) {
+        $scope.all_commonfield = data;
+    }).error(function(data) {
+        alert("系统错误，请联系管理员。");
+    });
+
+    //添加通用字段
+    $scope.add_comfield = function(){
+        var time=new Date().getTime();
+        var post_data = {new_field:$scope.new_field,new_field_type:$scope.new_field_type,new_field_length:$scope.new_field_length,new_field_info:$scope.new_field_info};
+        $http.post('/fuck/field/commonfield.php', post_data).success(function(data) {  
+            if(data=='ok'){
+                $scope.plug_alert('success','字段 '+$scope.new_field+' 新建完成。','icon-ok');
+                $state.go('site.commonfield',{data:time});
+            }else if(data=='has'){
+                $scope.plug_alert('danger','已包含 '+$scope.new_field+' 字段名，请输入其它的名称。','icon-ban-circle');
+            }else{
+                $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        });  
+    }
+
+    //修改通用字段
+    $scope.change_comfield = function(id,field,old_value){
+        var sid = field+'_'+id;
+        if(field=='field_type' || field=='id'){
+            $scope.plug_alert('danger','不能修改项','icon-ban-circle');
+        }else{
+            var dom = document.querySelector('#'+sid);
+            if(angular.element(dom).hasClass('red')==1){
+                //修改字段
+                var change_key = angular.element(dom).val();
+                if(field=='field_length' && isNaN(change_key)){
+                    $scope.plug_alert('danger','请输入数字。','icon-ban-circle');
+                    return false;
+                }
+                var post_data = {id:id,field:field,change_key:change_key};
+                $http.post('/fuck/field/commonfield.php', post_data).success(function(data) {  
+                    if(data=='ok'){
+                        $scope.plug_alert('success','字段修改完成。','icon-ok');
+                        $state.go('site.commonfield',{data:time});
+                    }else if(data=='has'){
+                        $scope.plug_alert('danger','该字段名已存在。','icon-ban-circle');
+                        angular.element(dom).val(old_value);
+                    }else{
+                        $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+                    }
+                }).error(function(data) {  
+                    alert("系统错误，请联系管理员。");
+                });  
+                angular.element(dom).attr('readonly','readonly').removeClass('red');
+            }else{
+                //标记编辑中
+                angular.element(dom).removeAttr('readonly').addClass('red');
+            }
+        }
+    }
+
+    //field_key
+    $scope.field_key = function(e){
+        $scope.field_key_click = e;
+    }
+
+    //删除
+    $scope.del_popover = {
+        title: '删除 ?',
+        templateUrl: 'del_popover.html'
+    };
+    $scope.del_field = function(){
+        var post_data = {del_field_id:$scope.field_key_click};
+        $http.post('/fuck/field/commonfield.php', post_data).success(function(data) {  
+            if(data=='ok'){
+                $scope.plug_alert('success',' 删除完成。','icon-ok');
+                var del = document.querySelector('#line_'+$scope.field_key_click);
+                angular.element(del).remove();  //移除此行
+                var dom = document.querySelector('.popover');
+                angular.element(dom).removeClass('in');  //移除popover
+            }else{
+                $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        });  
+    }
+}])

@@ -21,7 +21,7 @@
 		                      				popover-trigger="'mouseenter'"
 		                      				popover-placement="top-left">
 		                      		<span class="input-group-btn">
-										<button ng-class="{'disabled':newfolderForm.new_folder.$invalid}" class="btn btn-success" type="button" ng-click="add_folder()">新 建</button>
+										<button ng-disabled="newfolderForm.new_folder.$invalid" class="btn btn-success" type="button" ng-click="add_folder()">新 建</button>
 									</span>
 								</div>
 							</div>
@@ -90,9 +90,10 @@
 		</div>
 	</form>
 </script>
+<!--/重命名弹框-->
 
 <!--删除弹框-->
 <script type="text/ng-template" id="del_popover.html">
-	<button ng-class="{'disabled':renamefolderForm.re_folder.$invalid}" class="btn btn-danger btn-xs" type="button" ng-click="del_folder()">确 定</button>
+	<button class="btn btn-danger btn-xs" type="button" ng-click="del_folder()">确 定</button>
 </script>
 <!--/删除弹框-->
