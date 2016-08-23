@@ -1,0 +1,37 @@
+<div class="row" style="margin:0" ng-controller="addgoodsCtrl">
+	<div class="col-lg-12 mt20">
+		<div class="panel panel-show">
+			<div class="panel-heading">新建商品</div>
+			<div class="panel-body">
+				<div class="container-fluid mt20">
+					<form name="newgoodscommon">
+						<table class="table-condensed">
+							<thead>					
+								<tr ng-repeat="item in all_commonfield track by $index" id="line_{{item.id}}">
+									<td class="tagr blue">{{item.field_name}} :</td>
+									<td width="300">
+										<input 	type="text" 
+												class="form-control"
+												id="item.id"
+												ng-model="$parent.conf[$index]"
+												ng-click="ok(item.id)"
+												ng-required="{{item.field_require}}"
+												placeholder="长度小于{{item.field_length}}个字符"
+												maxlength="{{item.field_length}}" 
+						                      	ng-maxlength="{{item.field_length}}">
+									</td>
+									<td><div class="isrequire_{{item.field_require}} mt10">*</div></td>
+									<td class="mt10 ml10 badge_info">说明：{{item.field_info}}</td>
+								</tr>
+							</thead>
+						</table>
+					</form>
+					<button ng-disabled="newgoodscommon.$invalid" type="button" class="btn btn-primary" ng-click="oookkk()">OK</button>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<span class="red">*</span> 代表必填
+			<div class="ycmbcd"></div></div>
+		</div><!-- /pannel -->
+	</div><!-- /col -->
+</div>

@@ -3,8 +3,8 @@ $dir = dirname(__FILE__);
 require_once($dir."/../header.php");
 
 //查询字段
-if(isset($_GET['select_comfield'])){
-    $sql = "SELECT * FROM common_field ORDER BY id";
+if(isset($_GET['select_yahoofield'])){
+    $sql = "SELECT * FROM yahoo_field ORDER BY id";
     $res = $db->getAll($sql);
     echo json_encode($res);
 }
@@ -16,19 +16,21 @@ if(isset($_POST['new_field'])){
     $new_field_require = $_POST['new_field_require'];
     $new_field_length = $_POST['new_field_length'];
     $new_field_info = $_POST['new_field_info'];
+    $new_field_default = $_POST['new_field_default'];
     $new_field = addslashes($new_field);   //防止SQL注入
     $new_field_info = addslashes($new_field_info);
+    $new_field_default = addslashes($new_field_default);
 
     //查询是否已存在
-    $sql = "SELECT * FROM common_field WHERE field_name='{$new_field}'";
+    $sql = "SELECT * FROM yahoo_field WHERE field_name='{$new_field}'";
     $res = $db->getOne($sql);
 
     if(empty($res)){
         //插入通用字段属性表
-        $sql = "INSERT INTO common_field (field_name,field_type,field_require,field_length,field_info) VALUES ('{$new_field}','{$new_field_type}','{$new_field_require}','{$new_field_length}','{$new_field_info}')";
+        $sql = "INSERT INTO yahoo_field (field_name,field_type,field_require,field_length,field_info,field_default) VALUES ('{$new_field}','{$new_field_type}','{$new_field_require}','{$new_field_length}','{$new_field_info}','{$new_field_default}')";
         $res = $db->execute($sql);
         //搜索出字段id
-        $sql = "SELECT id FROM common_field WHERE field_name='{$new_field}'";
+        $sql = "SELECT id FROM yahoo_field WHERE field_name='{$new_field}'";
         $res = $db->getOne($sql);
         $id = $res['id'];
         if($new_field_type=="field_big_txt"){
@@ -37,7 +39,7 @@ if(isset($_POST['new_field'])){
             $lengs = "varchar(255)";
         }
         //插入商品通用字段表
-        $sql = "ALTER table goods_common add column com_{$id} {$lengs}";
+        $sql = "ALTER table goods_yahoo add column com_{$id} {$lengs}";
         $res = $db->execute($sql);
         echo "ok";
     }else{
@@ -52,7 +54,7 @@ if(isset($_POST['change_key'])){
     $id = $_POST['id'];
     $change_key = addslashes($change_key);   //防止SQL注入
     if($field=='field_name'){
-        $sql = "SELECT * FROM common_field WHERE field_name='{$change_key}' AND id<>'{$id}'";
+        $sql = "SELECT * FROM yahoo_field WHERE field_name='{$change_key}' AND id<>'{$id}'";
         $res = $db->getOne($sql);
         if(empty($res)){
 
@@ -61,7 +63,7 @@ if(isset($_POST['change_key'])){
             return false;
         }
     }
-    $sql = "UPDATE common_field SET {$field} = '{$change_key}' WHERE id='{$id}'";
+    $sql = "UPDATE yahoo_field SET {$field} = '{$change_key}' WHERE id='{$id}'";
     $res = $db->execute($sql);
     echo "ok";
 }
@@ -70,10 +72,10 @@ if(isset($_POST['change_key'])){
 if(isset($_POST['del_field_id'])){
     $del_field_id = $_POST['del_field_id'];
     //删除通用字段属性表
-    $sql = "DELETE FROM common_field where id='{$del_field_id}'";
+    $sql = "DELETE FROM yahoo_field where id='{$del_field_id}'";
     $res = $db->execute($sql);
     //删除商品通用字段表
-    $sql = "ALTER table goods_common drop column com_{$del_field_id}";
+    $sql = "ALTER table goods_yahoo drop column com_{$del_field_id}";
     $res = $db->execute($sql);
     echo "ok";
 }

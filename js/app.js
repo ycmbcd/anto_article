@@ -33,6 +33,18 @@ myApp.run(function($rootScope, $state, $stateParams) {
     });
 });
 
+//为post而设
+myApp.config(function($httpProvider){
+    $httpProvider.defaults.transformRequest=function(obj){
+        var str=[];
+        for(var p in obj){
+            str.push(encodeURIComponent(p)+"="+encodeURIComponent(obj[p]));
+        }
+        return str.join("&");
+    };
+    $httpProvider.defaults.headers.post={'Content-Type':'application/x-www-form-urlencoded'}      
+})
+
 myApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');	//重定向
     $stateProvider
@@ -51,6 +63,16 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
                 },
                 'sidebar@site': {
                     templateUrl: 'tpls/sidebar.html'
+                }
+            }
+        })
+    //商品管理
+        //新建商品
+        .state('site.addgoods',{
+            url: '/addgoods/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/goods/addgoods.html'
                 }
             }
         })
