@@ -16,7 +16,7 @@ if(isset($_POST['new_field'])){
     $new_field_require = $_POST['new_field_require'];
     $new_field_length = $_POST['new_field_length'];
     $new_field_info = $_POST['new_field_info'];
-    $new_field_default = $_POST['new_field_default'];
+    $new_field_default = isset($_POST['new_field_default']);
     $new_field = addslashes($new_field);   //防止SQL注入
     $new_field_info = addslashes($new_field_info);
     $new_field_default = addslashes($new_field_default);
@@ -39,7 +39,7 @@ if(isset($_POST['new_field'])){
             $lengs = "varchar(255)";
         }
         //插入商品通用字段表
-        $sql = "ALTER table goods_yahoo add column com_{$id} {$lengs}";
+        $sql = "ALTER table goods_yahoo add column yahoo_{$id} {$lengs}";
         $res = $db->execute($sql);
         echo "ok";
     }else{
@@ -75,7 +75,7 @@ if(isset($_POST['del_field_id'])){
     $sql = "DELETE FROM yahoo_field where id='{$del_field_id}'";
     $res = $db->execute($sql);
     //删除商品通用字段表
-    $sql = "ALTER table goods_yahoo drop column com_{$del_field_id}";
+    $sql = "ALTER table goods_yahoo drop column yahoo_{$del_field_id}";
     $res = $db->execute($sql);
     echo "ok";
 }

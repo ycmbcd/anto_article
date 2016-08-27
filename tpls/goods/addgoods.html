@@ -4,29 +4,88 @@
 			<div class="panel-heading">新建商品</div>
 			<div class="panel-body">
 				<div class="container-fluid mt20">
-					<form name="newgoodscommon">
+					<form name="newgoods_sku">
 						<table class="table-condensed">
-							<thead>					
-								<tr ng-repeat="item in all_commonfield track by $index" id="line_{{item.id}}">
-									<td class="tagr blue">{{item.field_name}} :</td>
-									<td width="300">
-										<input 	type="text" 
-												class="form-control"
-												id="item.id"
-												ng-model="$parent.conf[$index]"
-												ng-click="ok(item.id)"
-												ng-required="{{item.field_require}}"
-												placeholder="长度小于{{item.field_length}}个字符"
-												maxlength="{{item.field_length}}" 
-						                      	ng-maxlength="{{item.field_length}}">
-									</td>
-									<td><div class="isrequire_{{item.field_require}} mt10">*</div></td>
-									<td class="mt10 ml10 badge_info">说明：{{item.field_info}}</td>
-								</tr>
+							<thead>
+								<div class="label label-primary label_title">&nbsp;SKU&nbsp;</div>
 							</thead>
+							<tbody>			
+								<tr>
+									<td class="tagr blue f12">SKU：</td>
+									<td width="300"><input type="text" 
+											class="form-control input-sm"
+											placeholder="长度小于255个字符"
+											maxlength="{{item.field_length}}" 
+						                    ng-maxlength="{{item.field_length}}"
+						                    required
+						                    ng-model="sku_name"
+						                    ng-readonly="sku_over"
+									 	/>
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</form>
-					<button ng-disabled="newgoodscommon.$invalid" type="button" class="btn btn-primary" ng-click="oookkk()">OK</button>
+					<button ng-disabled="newgoods_sku.$invalid" type="button" class="btn btn-primary btn-xs btn-next ml20 mt10" ng-click="submit_sku()" ng-hide="sku_over"><i class="glyphicon glyphicon-chevron-down"></i></button>
+					<div class="hidden">{{sku_id}}</div><!--suk_id调试用，新建成功后返回id-->
+					<div ng-show="sku_over">
+					<hr>
+						<form name="newgoods_common">
+							<table class="table-condensed">
+								<thead>
+									<div class="label label-success label_title">通 用</div>
+								</thead>
+								<tbody>			
+									<tr ng-repeat="item in all_commonfield track by $index" id="line_{{item.id}}">
+										<td class="tagr green f12">{{item.field_name}} :</td>
+										<td width="300">
+											<input 	type="text" 
+													class="form-control input-sm"
+													id="item.id"
+													ng-model="$parent.conf[$index]"
+													ng-click="ok(item.id)"
+													ng-required="{{item.field_require}}"
+													placeholder="长度小于{{item.field_length}}个字符"
+													maxlength="{{item.field_length}}" 
+							                      	ng-maxlength="{{item.field_length}}">
+										</td>
+										<td><div class="isrequire_{{item.field_require}} mt10">*</div></td>
+										<td class="mt10 ml10 badge_info">说明：{{item.field_info}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+						<button ng-disabled="newgoods_common.$invalid" type="button" class="btn btn-primary btn-xs btn-next ml20 mt10" ng-click="submit_com()"><i class="glyphicon glyphicon-chevron-down"></i></button>
+					</div>
+					<div ng-show="com_over">
+					<hr>
+						<form name="newgood_yahoo">
+							<table class="table-condensed">
+								<thead>
+									<div class="label label-warning label_title">雅 虎</div>
+								</thead>
+								<thead>					
+									<tr ng-repeat="item in all_yahoofield track by $index" id="line_{{item.id}}">
+										<td class="tagr yellow f12">{{item.field_name}} :</td>
+										<td width="300">
+											<input 	type="text" 
+													class="form-control input-sm"
+													id="item.id"
+													ng-model="$parent.conf[$index]"
+													ng-click="ok(item.id)"
+													ng-required="{{item.field_require}}"
+													placeholder="长度小于{{item.field_length}}个字符"
+													maxlength="{{item.field_length}}" 
+							                      	ng-maxlength="{{item.field_length}}"
+							                      	ng-value="item.field_default">
+										</td>
+										<td><div class="isrequire_{{item.field_require}} mt10">*</div></td>
+										<td class="mt10 ml10 badge_info">说明：{{item.field_info}}</td>
+									</tr>
+								</thead>
+							</table>
+						</form>
+					</div>
 				</div>
 			</div>
 			<div class="panel-footer">

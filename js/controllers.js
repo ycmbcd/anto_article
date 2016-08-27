@@ -291,7 +291,7 @@ app.controller('commonfieldCtrl', ['$scope','$state','$http', function($scope,$s
                 $http.post('/fuck/field/commonfield.php', post_data).success(function(data) {  
                     if(data=='ok'){
                         $scope.plug_alert('success','字段修改完成。','icon-ok');
-                        $state.go('site.commonfield',{data:time});
+                        //$state.go('site.commonfield',{data:time});
                     }else if(data=='has'){
                         $scope.plug_alert('danger','该字段名已存在。','icon-ban-circle');
                         angular.element(dom).val(old_value);
@@ -390,7 +390,7 @@ app.controller('yahoofieldCtrl', ['$scope','$state','$http', function($scope,$st
                 $http.post('/fuck/field/yahoofield.php', post_data).success(function(data) {  
                     if(data=='ok'){
                         $scope.plug_alert('success','字段修改完成。','icon-ok');
-                        $state.go('site.yahoofield',{data:time});
+                        //$state.go('site.yahoofield',{data:time});
                     }else if(data=='has'){
                         $scope.plug_alert('danger','该字段名已存在。','icon-ban-circle');
                         angular.element(dom).val(old_value);

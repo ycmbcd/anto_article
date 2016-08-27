@@ -70,8 +70,14 @@ a:hover{
 .red{
 	color:#c80e00;
 }
+.yellow{
+	color:#FF7c00;
+}
 .blue{
 	color:#327190;
+}
+.tshadow{
+	text-shadow:#dedede 3px 3px 2px;
 }
 .weight{
 	font-weight: bold;
@@ -121,7 +127,7 @@ a:hover{
 	transform: rotateZ(90deg);
 }
 */
-/*说明*/
+/*说明标题按钮*/
 .badge_info{
 	display: inline-block;
     font-size: 12px;
@@ -135,6 +141,17 @@ a:hover{
 .readonly{
 	background:#f30;
 
+}
+.label_title{
+    height: 40px;
+    line-height: 40px;
+    padding: 4px 22px;
+    font-size: 15px;
+    border-radius: 20px;
+    border-style: double;
+}
+.btn-next{
+	width:30%;
 }
 /*panel带输入框的title*/
 .p_title{

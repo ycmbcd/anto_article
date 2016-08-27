@@ -77,6 +77,15 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
             }
         })
     //模板管理
+        //sku字段
+        .state('site.skufield',{
+            url: '/skufield/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/field/skufield.html'
+                }
+            }
+        })
         //通用字段
         .state('site.commonfield',{
             url: '/commonfield/{data}',
