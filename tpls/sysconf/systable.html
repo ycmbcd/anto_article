@@ -49,6 +49,7 @@
 									<table id="show_table" class="table table-bordered table-hover tagc">
 										<tr ng-repeat="item in tables track by $index">
 											<td>{{item.table_name}}</td>
+											<td>{{item.table_tpl | shop_filter}}</td>
 											<td style="width:156px;">
 												<button uib-popover-template="rename_popover.templateUrl"
 														popover-title="{{rename_popover.title}}" 
@@ -57,7 +58,13 @@
 														type="button" 
 														class="btn btn-warning pull-left btn-xs" 
 														ng-click="table_key(item.id)">重命名</button>&nbsp;
-												<button class="btn btn-primary btn-xs">模板</button>&nbsp;
+												<button class="btn btn-primary btn-xs"
+														uib-popover-template="tpl_popover.templateUrl"
+														popover-title="{{tpl_popover.title}}" 
+														popover-trigger="'outsideClick'" 
+														popover-placement="top"
+														type="button"
+														ng-click="table_key(item.id)">模板</button>&nbsp;
 												<button uib-popover-template="del_popover.templateUrl"
 														popover-title="{{del_popover.title}}" 
 														popover-trigger="'outsideClick'" 
@@ -103,6 +110,14 @@
 	</form>
 </script>
 <!--/重命名弹框-->
+
+<!--模板弹框-->
+<script type="text/ng-template" id="tpl_popover.html">
+	<button class="btn btn-primary btn-xs" type="button" ng-click="change_tpl('yahoo')">雅虎</button>
+	<button class="btn btn-primary btn-xs" type="button" ng-click="change_tpl('rakuten')">乐天</button>
+	<button class="btn btn-primary btn-xs" type="button" ng-click="change_tpl('amazon')">亚马逊</button>
+</script>
+<!--/模板弹框-->
 
 <!--删除弹框-->
 <script type="text/ng-template" id="del_popover.html">

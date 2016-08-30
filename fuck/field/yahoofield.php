@@ -16,7 +16,11 @@ if(isset($_POST['new_field'])){
     $new_field_require = $_POST['new_field_require'];
     $new_field_length = $_POST['new_field_length'];
     $new_field_info = $_POST['new_field_info'];
-    $new_field_default = isset($_POST['new_field_default']);
+    if(isset($_POST['new_field_default'])){
+        $new_field_default = $_POST['new_field_default'];
+    }else{
+        $new_field_default = '';
+    }
     $new_field = addslashes($new_field);   //防止SQL注入
     $new_field_info = addslashes($new_field_info);
     $new_field_default = addslashes($new_field_default);
@@ -39,7 +43,7 @@ if(isset($_POST['new_field'])){
             $lengs = "varchar(255)";
         }
         //插入商品通用字段表
-        $sql = "ALTER table goods_yahoo add column yahoo_{$id} {$lengs}";
+        $sql = "ALTER table goods_yahoo add column yahoo_{$id} {$lengs} DEFAULT '{$new_field_default}'";
         $res = $db->execute($sql);
         echo "ok";
     }else{

@@ -46,6 +46,15 @@ if(isset($_POST['re_table'])){
     }
 }
 
+//修改模板
+if(isset($_GET['change_tpl'])){
+    $change_tpl = $_GET['change_tpl'];
+    $change_table_id = $_GET['change_table_id'];
+    $sql = "UPDATE folder_table SET table_tpl='{$change_tpl}' where id='{$change_table_id}'";
+    $res = $db->execute($sql);
+    echo "ok";
+}
+
 //删除表单
 if(isset($_POST['del_table_id'])){
     $del_table_id = $_POST['del_table_id'];

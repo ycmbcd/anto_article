@@ -2,7 +2,7 @@
 $dir = dirname(__FILE__);
 require_once($dir."/../header.php");
 
-//查询字段
+//添加sku
 if(isset($_GET['add_sku'])){
 	$sku = $_GET['add_sku'];
 	$sku = addslashes($sku);
@@ -15,10 +15,35 @@ if(isset($_GET['add_sku'])){
         //查询sku_id
         $sql = "SELECT id FROM goods_sku WHERE sku='{$sku}'";
         $res = $db->getOne($sql);
-        echo $res['id'];
+        $sku_id = $res['id'];
+        //占位goods_common
+        $sql = "INSERT INTO goods_common (sku_id) VALUES ('{$sku_id}')";
+        $res = $db->execute($sql);
+        //占位goods_yahoo
+        $sql = "INSERT INTO goods_yahoo (sku_id) VALUES ('{$sku_id}')";
+        $res = $db->execute($sql);
+        echo $sku_id;
     }else{
     	echo 'has';
     }
+}
+
+//添加字段
+if(isset($_GET['add_field'])){
+    $add_field = $_GET['add_field'];
+    $field_id = $_GET['field_id'];
+    $field_val = $_GET['field_val'];
+    $field_val = addslashes($field_val);
+    $sku_id = $_GET['sku_id'];
+    if($add_field == 'com'){
+        $goods_table = 'goods_common';
+    }else if($add_field == 'yahoo'){
+        $goods_table = 'goods_yahoo';
+    }
+    //更新表
+    $sql = "UPDATE $goods_table SET $field_id='{$field_val}' where sku_id='{$sku_id}'";
+    $res = $db->execute($sql);
+    echo "ok";
 }
 
 ?>

@@ -211,6 +211,29 @@ app.controller('tableCtrl', ['$scope','$state','$http', function($scope,$state,$
         });  
     }
 
+    //模板添加（替换）
+    $scope.tpl_popover = {
+        title: '请选择模板',
+        templateUrl: 'tpl_popover.html'
+    };
+
+    $scope.change_tpl = function(e){
+        $http.get('/fuck/systable.php', {params:{change_tpl:e,change_table_id:$scope.table_key_click}
+        }).success(function(data) {
+            if(data=="ok"){
+                $scope.plug_alert('success','操作完成。','icon-ok'); 
+                $scope.select_table($scope.click_key,$scope.click_id); 
+                var dom = document.querySelector('.popover');
+                angular.element(dom).removeClass('in');  //移除popover
+            }else{
+                $scope.plug_alert('danger','系统错误，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {
+            alert("系统错误，请联系管理员。");
+        });
+
+    }
+
     //删除
     $scope.del_popover = {
         title: '删除 ?',
