@@ -76,6 +76,17 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+
+    //表管理
+        .state('site.show_table',{
+            url: '/show_table/{folder_id}/{tb_name}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/table/show_table.html'
+                }
+            }
+        })
+
     //模板管理
         //sku字段
         .state('site.skufield',{

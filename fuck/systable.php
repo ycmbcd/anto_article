@@ -23,6 +23,18 @@ if(isset($_POST['new_table'])){
     if(empty($res)){
         $sql = "INSERT INTO folder_table (table_name,folder_id) VALUES ('{$new_table}','{$folder_id}')";
         $res = $db->execute($sql);
+        //查询出table_id
+        $sql = "SELECT id FROM folder_table WHERE table_name='{$new_table}' and folder_id='{$folder_id}'";
+        $res = $db->getOne($sql);
+        $table_id = 'table_'.$res['id'];
+        //新建表单show表
+        $sql = "CREATE table $table_id(
+                id int(9) auto_increment primary key,
+                com_ids varchar(255),
+                yahoo_ids varchar(255),
+                rakuten_ids varchar(255),
+                amazon_ids varchar(255))engine=InnoDB DEFAULT charset='utf8'";
+        $res = $db->execute($sql);          
         echo "ok";
     }else{
         echo "has";
@@ -59,6 +71,11 @@ if(isset($_GET['change_tpl'])){
 if(isset($_POST['del_table_id'])){
     $del_table_id = $_POST['del_table_id'];
     $sql = "DELETE FROM folder_table where id='{$del_table_id}'";
+    $res = $db->execute($sql);
+    //删除show表
+    $table_id = 'table_'.$del_table_id;
+    //新建表单show表
+    $sql = "DROP table $table_id";
     $res = $db->execute($sql);
     echo "ok";
 }

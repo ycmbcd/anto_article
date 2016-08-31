@@ -4,7 +4,7 @@ require_once($dir."/./header.php");
 
 //查询文件夹（包括表单）用于侧栏展示
 if(isset($_GET['folder_all'])){
-    $sql = "SELECT folder.id,folder.folder_name,group_concat(table_name ORDER BY folder_table.id DESC separator ',')AS tbname FROM folder_table, folder WHERE folder_table.folder_id=folder.id GROUP BY folder.folder_name ORDER BY folder.id DESC";
+    $sql = "SELECT folder.id,folder_table.folder_id,folder.folder_name,group_concat(table_name ORDER BY folder_table.id DESC separator ',')AS tbname FROM folder_table, folder WHERE folder_table.folder_id=folder.id GROUP BY folder.folder_name ORDER BY folder.id DESC";
     $res = $db->getAll($sql);
     $arr = array();
     $arr1 = array();

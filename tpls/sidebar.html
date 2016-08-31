@@ -33,7 +33,7 @@
 	        		<span ng-bind="folder_table.folder_name"></span><i class="pull-right icon-folder-close-alt" ng-class="{'icon-folder-open-alt':xxx}"></i>
 	     	 	</uib-accordion-heading>
 	     	 	<div ng-repeat="tb in folder_table.tbname track by $index">
-					<div ui-sref-active="active" class="list-group-item">
+					<div ui-sref="site.show_table({folder_id:'{{folder_table.folder_id}}',tb_name:'{{tb}}'})" ui-sref-active="active" class="list-group-item">
 						{{tb}}<i class="pull-right icon-table"></i>
 					</div>
 				</div>
