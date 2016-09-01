@@ -176,18 +176,14 @@ app.controller('plugCtrl', ['$scope','$uibModal','$log', function($scope,$uibMod
     $scope.items = ['item1', 'item2', 'item3'];
     $scope.animationsEnabled = true;
 
-    $scope.open = function (size) {
+    $scope.open = function (size,mytpl,ctrler) {
 
+        mytpl = mytpl+'.html'
         var modalInstance = $uibModal.open({
           animation: $scope.animationsEnabled,
-          templateUrl: 'myModalContent.html',
-          controller: 'ModalInstanceCtrl',
-          size: size,
-          resolve: {
-            items: function () {
-              return $scope.items;
-            }
-          }
+          templateUrl: mytpl,
+          controller: ctrler,
+          size: size
     });
 
     modalInstance.result.then(function (selectedItem) {
@@ -202,12 +198,12 @@ app.controller('plugCtrl', ['$scope','$uibModal','$log', function($scope,$uibMod
     };
 }])
 
-app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
 
-    $scope.items = items;
-        $scope.selected = {
-        item: $scope.items[0]
-    };
+    // $scope.items = items;
+    //     $scope.selected = {
+    //     item: $scope.items[0]
+    // };
 
     $scope.ok = function () {
         $uibModalInstance.close($scope.selected.item);
@@ -217,3 +213,4 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) 
         $uibModalInstance.dismiss('cancel');
     };
 });
+

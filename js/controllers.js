@@ -59,7 +59,7 @@ app.controller('siteCtrl', ['$rootScope','$scope','$state','$http', function($ro
     }
 
     $scope.select_folder_all(); //调用
-
+    
     //查询表单
     $scope.select_table = function(click_key,click_id){
         $scope.click_me(click_key,click_id);   //赋值

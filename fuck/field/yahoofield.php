@@ -8,6 +8,12 @@ if(isset($_GET['select_yahoofield'])){
     $res = $db->getAll($sql);
     echo json_encode($res);
 }
+//同上，用于字段管理
+if(isset($_GET['select_field'])){
+    $sql = "SELECT * FROM yahoo_field ORDER BY id";
+    $res = $db->getAll($sql);
+    echo json_encode($res);
+}
 
 //添加表单
 if(isset($_POST['new_field'])){

@@ -5,16 +5,19 @@
 }
 </style>
 <div class="row" style="margin:0" ng-controller="showtableCtrl">
+
+<button type="button" class="btn btn-lg btn-danger" data-animation="am-flip-x" data-template-url="/modal/table_field_choose.html" bs-modal="modal" ng-click="table_field(tb_tpl)">字段管理
+</button>
+
 	<div class="col-lg-12 mt20">
 		<div class="panel panel-show">
-			<div class="panel-heading">【表】{{tb_name}} 【模板】{{tb_tpl | shop_filter}}</div>
+			<div class="panel-heading">【{{tb_tpl | shop_filter}}】{{tb_name}} </div>
 			<div class="panel-body">
 				<table class="table table-condensed">
 					<thead>
 						<tr class="blue">
 							<td>序号</td>
-							<td>SKU</td>
-							<td ng-repeat="title in table_title">{{title.field_name}}</td>
+							<td ng-repeat="title in table_title">{{title}}</td>
 						</tr>
 					</thead>
 					<tr ng-repeat="item in show_table | filter:key_words track by $index" id="line_{{item.id}}">
@@ -27,20 +30,11 @@
 									value="{{value | field_filter}}"
 									>
 						</td>
-						<td>
-							<button uib-popover-template="del_popover.templateUrl"
-									popover-title="{{del_popover.title}}" 
-									popover-trigger="'outsideClick'" 
-									popover-placement="right-bottom"
-									type="button"
-									class="btn btn-danger btn-xs"
-									ng-click="field_key(item.id)">删 除</button>
-						</td>
 					</tr>
 				</table>
 			</div>
 			<div class="panel-footer">
-				<span class="red">*</span> 必填
+				'【】'内为模板名，后跟表名。
 			<div class="ycmbcd"></div></div>
 		</div><!-- /pannel -->
 	</div><!-- /col -->

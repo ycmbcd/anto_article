@@ -15,6 +15,9 @@ a{
 a:hover{
 	color:#dedede;
 }
+li{
+	list-style: none;
+}
 /*image{display: block;border:none;}*/
 .bg_image{background: url('/images/bg1.jpg') no-repeat center center fixed;background-size:cover;}
 .error{
@@ -94,6 +97,10 @@ a:hover{
 }
 .resize_none{
 	resize: none;
+}
+/*模态框*/
+.modal-open{
+	overflow: auto;
 }
 /*是否必填*/
 .isrequire_0{
