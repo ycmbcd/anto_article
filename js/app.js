@@ -79,7 +79,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 
     //表管理
         .state('site.show_table',{
-            url: '/show_table/{folder_id}/{tb_name}',
+            url: '/show_table/{folder_id}/{tb_name}/{time}',
             views:{
                 'show@site':{
                     templateUrl: 'tpls/table/show_table.html'

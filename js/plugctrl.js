@@ -79,6 +79,10 @@ app.controller('plugCtrl', ['$scope','$uibModal','$log', function($scope,$uibMod
         showWeeks: true
     };
 
+    $scope.aaa = function(){    //测试弹出值
+        alert($scope.ssa)
+    }
+    
     $scope.dateOptions = {
         //dateDisabled: disabled,   是否选择周六周日
         formatYear: 'yy',

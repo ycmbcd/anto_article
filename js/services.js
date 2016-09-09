@@ -1,9 +1,9 @@
-var bookStoreServices = angular.module('bookStoreServices', []);
+var myServices = angular.module('myApp');
 
-bookStoreServices.service('bookStoreService_1', ['$scope',
+myServices.service('myServices_1', ['$scope',
     function($scope) {}
 ]);
 
-bookStoreServices.service('bookStoreService_2', ['$scope',
+myServices.service('myServices_2', ['$scope',
     function($scope) {}
 ]);

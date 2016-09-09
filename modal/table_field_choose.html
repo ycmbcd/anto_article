@@ -3,35 +3,35 @@
     <div class="modal-content">
       <div class="modal-header" ng-show="title">
         <button type="button" class="close" ng-click="$hide()">&times;</button>
-        <h4 class="modal-title" ng-bind-html="title">{{tb_name}} 字段管理</h4>
+        <h4 class="modal-title" ng-bind-html="title">字段序列：{{tb_name}} </h4>
       </div>
       <div class="modal-body">
-        <div class="red">通用字段</div>
+        <div class="m10">
+          <div class="red">SKU</div>
+          <label>
+            <input type="checkbox" ng-click="select('sku','sku','SKU',$event)"> SKU</label>
+          <hr class="mtb_6">      
+          <div class="red">通用字段</div>
           <div ng-repeat="common in common_fields track by $index" class="pull-left mr10">
             <label>
-              <input type="checkbox" name="tagName" value="common.id" ng-click="select('com',common.id,common.field_name,$event)">
-              <!-- {{common.id}} -->
-              {{common.field_name}} 
-            </label>
+              <input type="checkbox" value ng-click="select('com',common.id,common.field_name,$event)">      
+              <!-- {{common.id}} -->{{common.field_name}}</label>
           </div>
           <div class="clearfix"></div>
-          <hr>
-        <div class="green">{{tb_tpl | shop_filter}}字段</div>
+          <hr class="mtb_6">      
+          <div class="green">{{tb_tpl | shop_filter}}字段</div>
           <div ng-repeat="tpl in tpl_fields track by $index" class="pull-left mr10">
-            <label>   
-              <input type="checkbox" name="tagName" value="tpl.id" ng-click="select(tb_tpl,tpl.id,tpl.field_name,$event)">
-              <!-- {{tpl.id}} -->
-              {{tpl.field_name}} 
-            </label>
+            <label>
+              <input type="checkbox" va ng-click="select(tb_tpl,tpl.id,tpl.field_name,$event)">      
+              <!-- {{tpl.id}} -->{{tpl.field_name}}</label>
           </div>
           <div class="clearfix"></div>
-          <hr>
+          <hr class="mtb_6">      
           <div class="blue">您的选择：</div>
-          <div class="pull-left mr10" ng-repeat="my_select in my_select_name">
-            {{my_select}}
-          </div>
+          <div class="pull-left mr10" ng-repeat="my_select in my_select_name">{{my_select}}</div>
           <div class="clearfix"></div>
           <h3 class="hidden">{{my_select}}</h3>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" ng-click="sub_myfields();$hide()">保存</button>

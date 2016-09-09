@@ -43,6 +43,9 @@ li{
 .auto{
 	margin:0 auto;
 }
+.m10{
+	margin:10px;
+}
 .ml10{
 	margin-left:10px;
 }
@@ -61,11 +64,17 @@ li{
 .mr20{
 	margin-right:20px;
 }
+.mt70{
+	margin-top:70px;
+}
 .bdr_no{
 	border-radius: 0px !important;
 }
 .pointer{
 	cursor: pointer;
+}
+.pointer:hover{
+	color:#c80e00;
 }
 .green{
 	color:green;
@@ -95,6 +104,9 @@ li{
 	top:10px;
 	right:66px;
 }
+.mtb_6{
+	margin:6px 0;
+}
 .resize_none{
 	resize: none;
 }
@@ -109,6 +121,47 @@ li{
 .isrequire_1{
 	color:#c80e00;
 	font-size: 18px;
+}
+/*工具条*/
+.tool_bar{
+	position: fixed;
+	z-index: 1000;
+}
+/*分页*/
+.pagination{
+	position: fixed;
+	bottom:-2px;
+	right:0;
+	margin-bottom: 0px;
+	font-size: 12px;
+}
+.pagination li a{
+	background: #fdfbf3 !important;
+}
+.pagination li a:hover{
+	background: #EEE !important;
+	color:#333 !important;
+}
+.pagination .active a,.pagination .active a:hover{
+	border: 1px solid #c4c4c4;
+}
+.pagination > li > a, .pagination > li > span{
+	color:#36a38b;
+}
+.pagination > li > a:hover, .pagination > li > span:hover{
+	color:#155748;
+}
+.page_size{
+	width: 40px;
+	height: 17px;
+}
+.pg_s{
+	border-bottom-left-radius: 0px !important;
+	border-top-left-radius: 14px !important;
+}
+.pg_e{
+	border-bottom-right-radius: 0px !important;
+	border-top-right-radius: 0px !important;
 }
 /* 旋转 */
 /*.scroll_0{
@@ -255,7 +308,7 @@ li{
 	margin-bottom: 1px;
 	border-radius: 0 !important;
 }
-#side_bar .active{
+#side_bar .active,.pagination .active a{
     background-image: -webkit-linear-gradient(top,#36a38b 0,#36a38b 100%) !important;
     background-image: -o-linear-gradient(top,#36a38b 0,#36a38b 100%) !important;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#36a38b),to(#36a38b)) !important;
