@@ -64,6 +64,9 @@ li{
 .mr20{
 	margin-right:20px;
 }
+.mt40{
+	margin-top:40px;
+}
 .mt70{
 	margin-top:70px;
 }
@@ -118,9 +121,29 @@ li{
 .isrequire_0{
 	display: none;
 }
-.isrequire_1{
+.isrequire_1,.requirett_1{
 	color:#c80e00;
 	font-size: 18px;
+}
+/*赋值框*/
+.btn-info-no{
+	background: #999 !important;
+	border:1px solid #666;
+}
+.fu_tr{
+	position: relative;
+}
+.fuzhi{
+	z-index: 3000px;
+	position: absolute;
+    margin-top: 3px;
+    margin-left: -313px;
+    background: #eee;
+    border: 1px solid #dedede;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding:6px 12px !important;
 }
 /*工具条*/
 .tool_bar{

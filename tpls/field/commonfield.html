@@ -1,6 +1,6 @@
 <style>
-		/*隐藏id*/
-.hidden_id{
+/*隐藏id*/
+.hidden_id,.hidden_field_id{
 	display: none;
 }
 </style>
@@ -46,15 +46,15 @@
 															<option value="field_big_txt">大文本（大于255字符）</option>
 														</select>
 					                      			</td>
-					                      			<td width="18%">
+					                      			<td width="10%">
 					                      				<input  type="number" 
 																min="1"
 																max="60000"
 																class="form-control input-sm" 
-																placeholder="字段长度，最多60000"
+																placeholder="长度限制"
 																ng-model="ctrl.add.new_field_length"
 																required
-							                      				uib-popover="这里填正整数"
+							                      				uib-popover="这里填正整数，长度小于60000个字符"
 							                      				popover-trigger="'mouseenter'"
 							                      				popover-placement="top-left">
 					                      			</td>
@@ -65,14 +65,28 @@
 															<option value="0">否</option>
 														</select>
 					                      			</td>
-					                      			<td width="30%">
+					                      			<td width="23%">
+					                      				<input 	rows="3"
+					                      						ng-model="ctrl.add.new_field_option"
+					                      						class="form-control input-sm" 
+					                      						maxlength="200"
+					                      						ng-maxlength="200"
+					                      						placeholder="字段选项"
+					                      						uib-popover="英文逗号隔开，最多200个字符"
+							                      				popover-trigger="'mouseenter'"
+							                      				popover-placement="top-left" />
+					                      			</td>
+					                      			<td width="15%">
 					                      				<input 	rows="3"
 					                      						ng-model="ctrl.add.new_field_info"
 					                      						class="form-control input-sm" 
 					                      						required
 					                      						maxlength="50"
 					                      						ng-maxlength="50"
-					                      						placeholder="字段说明，最多50个字符" />
+					                      						placeholder="字段说明"
+					                      						uib-popover="最多50个字符"
+							                      				popover-trigger="'mouseenter'"
+							                      				popover-placement="top-left" />
 					                      			</td>
 					                      			<td width="5%">
 					                      				<input ng-disabled="newcomfieldForm.$invalid || !ctrl.add.new_field_type || !ctrl.add.new_field_require" class="btn btn-success pull-right btn-sm" type="submit" value="新 建" />
@@ -89,6 +103,7 @@
 												<td>字段类型 •</td>
 												<td>字段长度</td>
 												<td>是否必填 §</td>
+												<td>字段选项</td>
 												<td>字段说明</td>
 												<td>操 作</td>
 											</tr>

@@ -46,4 +46,14 @@ if(isset($_GET['add_field'])){
     echo "ok";
 }
 
+//查询赋值选项
+if(isset($_GET['field_option'])){
+    $id = $_GET['field_option'];
+    $from_table = $_GET['from_table'];
+    $from_table = $from_table.'_field';
+    $sql = "SELECT field_option FROM $from_table where id='{$id}'";
+    $res = $db->getOne($sql);
+    $arr = explode(',', $res['field_option']);
+    echo json_encode($arr);
+}
 ?>

@@ -3,6 +3,21 @@ var app=angular.module('myApp');
 app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','$http','$log','$modal',function($scope,$rootScope,$state,$stateParams,$http,$log,$modal){
     $scope.folder_id = $stateParams.folder_id;  //文件夹id
     $scope.tb_name = $stateParams.tb_name;  //tb_name 传参赋值
+    //ng-repeat之后要做的事情
+    $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+          //下面是在table render完成后执行的js
+          $scope.fix_table();
+    });
+
+    //修正panel宽度
+    $scope.fix_table = function(){
+        var fix_table = document.querySelector('.fix_table');
+        var fix_panel = document.querySelector('.fix_panel');
+        var fix_box = document.querySelector('.fix_box');
+        var fix_table_width = angular.element(fix_table).prop('scrollWidth');
+        angular.element(fix_panel).css({'width':fix_table_width+30+'px'});
+        angular.element(fix_box).css({'width':fix_table_width+60+'px'});
+    }
 
     //修正工具条宽度
     $scope.fix_width = function(){
@@ -305,6 +320,17 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
 
     }
 
+    //表格下载
+    $scope.down_tb = function(){
+        $http.get('/fuck/table/show_table.php', {params:{down_tb:$scope.tb_name}
+        }).success(function(data) {
+            if(data=='ok'){
+                window.location="/down/"+$scope.tb_name+".xlsx";
+            }
+        }).error(function(data) {
+            alert("系统错误，请联系管理员。");
+        });
+    }
 
 
     

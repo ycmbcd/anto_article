@@ -11,7 +11,7 @@
 	        <li ng-class="{active: hover1}" ng-mouseenter="hover1 = true" ng-mouseleave="hover1 = false">
 	        	<a href="" ng-click="fix_width()"><i class="icon-resize-horizontal"></i></a>
 	        </li>
-	        <li ng-class="{active: hover2}" ng-mouseenter="hover2 = true" ng-mouseleave="hover2 = false"><a href="">Link</a></li>
+	        <li ng-class="{active: hover2}" ng-mouseenter="hover2 = true" ng-mouseleave="hover2 = false" ng-click="down_tb()"><a href="">表格下载</a></li>
 	      </ul>
 	      <form class="navbar-form navbar-left" role="search">
 	        <div class="form-group">
@@ -26,25 +26,26 @@
 	  </div><!-- /.container-fluid -->
 	</nav>
 	<!-- 工具条结束 -->
-	<div class="col-lg-12 mt70">
-		<div class="panel panel-show">
+	<div class="mt70 col-lg-12 fix_box">
+		<div class="panel panel-show fix_panel">
 			<div class="panel-heading">
 				<span class="mr10">模板:{{tb_tpl | shop_filter}}</span>
 				<span class="pointer" data-animation="am-flip-x" data-template-url="/modal/table_field_choose.html" bs-modal="modal" ng-click="table_field(tb_tpl)">字段序列 </span>
 			</div>
 			<div class="panel-body">
-				<table class="table table-condensed">
+				<table class="table fix_table">
 					<thead>
 						<tr class="blue">
 							<td>序号</td>
 							<td ng-repeat="title in table_title">{{title}}</td>
 						</tr>
 					</thead>
-					<tr ng-repeat="item in show_table | filter:key_words track by $index" id="line_{{item.id}}">
+					<tr ng-repeat="item in show_table | filter:key_words track by $index" on-finish-render-filters id="line_{{item.id}}">
 						<td>{{$index+1}}</td>
 						<td ng-repeat="(key, value) in item track by $index" class="hidden_{{key}}">
 							<input 	ng-dblclick="change_yahoofield(item.id,key,value)" 
 									readonly
+									style="width:300px" 
 									class="form-control input-sm"
 									id="{{key}}_{{item.id}}" 
 									value="{{value | field_filter}}"
@@ -53,39 +54,39 @@
 					</tr>
 				</table>
 			</div>
-			<nav>
-				<ul class="pagination">
-					<li class="pointer" ng-class="{disabled:pre_overflow}">
-						<a class="pg_s" ng-click="Previous()">
-							<span>&nbsp;上一页</span>
-						</a>
-					</li>
-					<li class="pointer" ng-repeat="page in pageList track by $index" ng-class="{active: isActivePage(page)}" >
-						<a ng-click="selectPage(page)" >{{ page }}</a>
-					</li>
-					<li class="pointer" ng-class="{disabled:next_overflow}">
-						<a ng-click="Next()">
-							<span>下一页</span>
-						</a>
-					</li>
-					<li class="disabled">
-						<a>每页 <input class="page_size tagr" type="number" min="1" ng-model='change_size' ng-value="pageSize" ng-change="change_pageSize()"> 条</a>
-					</li>
-					<li>
-						<a>
-							<select ng-model="selectOption" ng-change="clickOption()" ng-options="c as c for c in pageOption">
-								 <option value="">跳转</option>
-							</select>
-						</a>
-					</li>
-					<li class="disabled">
-						<a class="pg_e">Page {{selPage}} / {{pages}}</a><a>共 {{all_num}} 条</a>
-					</li>
-				</ul>
-			</nav>
 			<div class="panel-footer">
 				点击 <i class="icon-resize-horizontal"></i> 修正工具条宽度。
 			<div class="ycmbcd"></div></div>
 		</div><!-- /pannel -->
 	</div><!-- /col -->
+	<nav>
+		<ul class="pagination">
+			<li class="pointer" ng-class="{disabled:pre_overflow}">
+				<a class="pg_s" ng-click="Previous()">
+					<span>&nbsp;上一页</span>
+				</a>
+			</li>
+			<li class="pointer" ng-repeat="page in pageList track by $index" ng-class="{active: isActivePage(page)}" >
+				<a ng-click="selectPage(page)" >{{ page }}</a>
+			</li>
+			<li class="pointer" ng-class="{disabled:next_overflow}">
+				<a ng-click="Next()">
+					<span>下一页</span>
+				</a>
+			</li>
+			<li class="disabled">
+				<a>每页 <input class="page_size tagr" type="number" min="1" ng-model='change_size' ng-value="pageSize" ng-change="change_pageSize()"> 条</a>
+			</li>
+			<li>
+				<a>
+					<select ng-model="selectOption" ng-change="clickOption()" ng-options="c as c for c in pageOption">
+						 <option value="">跳转</option>
+					</select>
+				</a>
+			</li>
+			<li class="disabled">
+				<a class="pg_e">Page {{selPage}} / {{pages}}</a><a>共 {{all_num}} 条</a>
+			</li>
+		</ul>
+	</nav>
 </div>

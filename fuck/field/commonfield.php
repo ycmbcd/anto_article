@@ -15,9 +15,11 @@ if(isset($_POST['new_field'])){
     $new_field_type = $_POST['new_field_type'];
     $new_field_require = $_POST['new_field_require'];
     $new_field_length = $_POST['new_field_length'];
+    $new_field_option = $_POST['new_field_option'];
     $new_field_info = $_POST['new_field_info'];
     $new_field = addslashes($new_field);   //防止SQL注入
     $new_field_info = addslashes($new_field_info);
+    $new_field_option = addslashes($new_field_option);
 
     //查询是否已存在
     $sql = "SELECT * FROM common_field WHERE field_name='{$new_field}'";
@@ -25,7 +27,7 @@ if(isset($_POST['new_field'])){
 
     if(empty($res)){
         //插入通用字段属性表
-        $sql = "INSERT INTO common_field (field_name,field_type,field_require,field_length,field_info) VALUES ('{$new_field}','{$new_field_type}','{$new_field_require}','{$new_field_length}','{$new_field_info}')";
+        $sql = "INSERT INTO common_field (field_name,field_type,field_require,field_length,field_option,field_info) VALUES ('{$new_field}','{$new_field_type}','{$new_field_require}','{$new_field_length}','{$new_field_option}','{$new_field_info}')";
         $res = $db->execute($sql);
         //搜索出字段id
         $sql = "SELECT id FROM common_field WHERE field_name='{$new_field}'";
@@ -51,7 +53,7 @@ if(isset($_POST['change_key'])){
     $field = $_POST['field'];
     $id = $_POST['id'];
     $change_key = addslashes($change_key);   //防止SQL注入
-    if($field=='field_name'){
+    if($field == 'field_name'){
         $sql = "SELECT * FROM common_field WHERE field_name='{$change_key}' AND id<>'{$id}'";
         $res = $db->getOne($sql);
         if(empty($res)){

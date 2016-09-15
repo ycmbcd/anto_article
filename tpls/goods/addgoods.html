@@ -20,24 +20,26 @@
 						                    required
 						                    ng-model="sku_name"
 						                    ng-readonly="sku_over"
+						                    ng-trim='true'
+						                    id="sku_name" 
 									 	/>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</form>
-					<button ng-disabled="newgoods_sku.$invalid" type="button" class="btn btn-primary btn-xs btn-next ml20 mt10" ng-click="submit_sku()" ng-hide="sku_over"><i class="glyphicon glyphicon-chevron-down"></i></button>
+					<button ng-disabled="newgoods_sku.$invalid" type="button" class="btn btn-primary btn-xs btn-next ml20 mt40" ng-click="submit_sku()" ng-hide="sku_over"><i class="glyphicon glyphicon-chevron-down"></i></button>
 					<div class="hidden">{{sku_id}}</div><!--suk_id调试用，新建成功后返回id-->
 					<div ng-show="sku_over">
 					<hr>
 						<form name="newgoods_common">
-							<table class="table-condensed">
+							<table class="table-condensed" ng-mouseleave="remove_option()">
 								<thead>
 									<div class="label label-success label_title">通 用</div>
 								</thead>
 								<tbody>			
-									<tr ng-repeat="item in all_commonfield track by $index">
-										<td class="tagr green f12">{{item.field_name}} :</td>
+									<tr class="fu_tr" ng-repeat="item in all_commonfield track by $index">
+										<td class="tagr f12 requirett_{{item.field_require}}">{{item.field_name}} :</td>
 										<td width="300">
 											<input 	type="text" 
 													class="form-control input-sm"
@@ -48,26 +50,31 @@
 													placeholder="长度小于{{item.field_length}}个字符"
 													maxlength="{{item.field_length}}" 
 							                      	ng-maxlength="{{item.field_length}}"
-							                      	ng-readonly="com_over">
+							                      	ng-readonly="com_over"
+							                      	ng-click="find_option(item.id,'common')"
+							                      	>
 										</td>
 										<td><div class="isrequire_{{item.field_require}} mt10">*</div></td>
 										<td class="mt10 ml10 badge_info">说明：{{item.field_info}}</td>
+										<td class="hidden fuzhi" id="sscommon{{item.id}}">
+											<input  ng-repeat="oop in field_option track by $index" class="btn btn-xs mr10 ml10 btn-info" ng-class="{'btn-info-no':color.active$index}" type="button" ng-click="fuzhi('new_com_'+item.id,oop,'com','com_'+item.id);color.active$index=!color.active$index" value="{{oop}}" />
+										</td>
 									</tr>
 								</tbody>
 							</table>
 						</form>
-						<button ng-disabled="newgoods_common.$invalid" type="button" class="btn btn-primary btn-xs btn-next ml20 mt10" ng-click="submit_com()" ng-hide="com_over"><i class="glyphicon glyphicon-chevron-down"></i></button>
+						<button ng-disabled="newgoods_common.$invalid" type="button" class="btn btn-primary btn-xs btn-next ml20 mt40" ng-click="submit_com()" ng-hide="com_over"><i class="glyphicon glyphicon-chevron-down"></i></button>
 					</div>
 					<div ng-show="com_over">
 					<hr>
 						<form name="newgood_yahoo">
-							<table class="table-condensed">
+							<table class="table-condensed" ng-mouseleave="remove_option()">
 								<thead>
 									<div class="label label-warning label_title">雅 虎</div>
 								</thead>
 								<tbody>			
-									<tr ng-repeat="item in all_yahoofield track by $index">
-										<td class="tagr green f12">{{item.field_name}} :</td>
+									<tr class="fu_tr" ng-repeat="item in all_yahoofield track by $index">
+										<td class="tagr f12 requirett_{{item.field_require}}">{{item.field_name}} :</td>
 										<td width="300">
 											<input 	type="text" 
 													class="form-control input-sm"
@@ -79,10 +86,15 @@
 													placeholder="长度小于{{item.field_length}}个字符"
 													maxlength="{{item.field_length}}" 
 							                      	ng-maxlength="{{item.field_length}}"
-							                      	ng-readonly="yahoo_over">
+							                      	ng-readonly="yahoo_over"
+							                      	ng-click="find_option(item.id,'yahoo')"
+							                      	>
 										</td>
 										<td><div class="isrequire_{{item.field_require}} mt10">*</div></td>
 										<td class="mt10 ml10 badge_info">说明：{{item.field_info}}</td>
+										<td class="hidden fuzhi" id="ssyahoo{{item.id}}">
+											<input  ng-repeat="oop in field_option track by $index" class="btn btn-xs mr10 ml10 btn-info" ng-class="{'btn-info-no':color.active$index}" type="button" ng-click="fuzhi('new_yahoo_'+item.id,oop,'yahoo','yahoo_'+item.id);color.active$index=!color.active$index" value="{{oop}}" />
+										</td>
 									</tr>
 								</tbody>
 							</table>
