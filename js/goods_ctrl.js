@@ -33,26 +33,42 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
         return str.replace(/(^\s*)|(\s*$)/g, "");
     }
 
+
+
     //快速赋值
-    $scope.fuzhi = function(e,f,f_type,f_id){
-        //e为需要input修改的id，f为点击的值，(f_type是操作的表，f_id为操作表的field_id，此两个字段供保存用)
-        var dom = document.querySelector('#'+e);
-        var o_value = angular.element(dom).val();
+    $scope.fuzhi = function(f,f_type,f_id,xxxx,index){
+        //f为点击的值，(f_type是操作的表，f_id为操作表的field_id，此两个字段供保存用),index为input的index
+        if(xxxx=='aaaa'){
+            var o_value = $scope.aaaa[index];
+        }else if(xxxx='bbbb'){
+            var o_value = $scope.bbbb[index];
+        }
+        if(typeof(o_value)=='undefined'){   //默认情况下为空，则会undefined，这时重新定义原始值为空
+            o_value ='';
+        }
         var is_has = o_value.indexOf(f);
         var final_key='';
         if(is_has<0){ 
             f = o_value+' '+f;
             //删掉第一个和最后一个空格
             f = $scope.trim(f);
-            angular.element(dom).val(f);
             final_key = f;
+            if(xxxx=='aaaa'){
+                $scope.aaaa[index]= final_key;
+            }else if(xxxx='bbbb'){
+                $scope.bbbb[index]= final_key;
+            }
             $scope.add_field_go(f_type,f_id,final_key);
         }else{
             f = o_value.replace(f,'');
             //删掉第一个和最后一个空格
             f = $scope.trim(f);
-            angular.element(dom).val(f);
             final_key = f;
+            if(xxxx=='aaaa'){
+                $scope.aaaa[index]= final_key;
+            }else if(xxxx='bbbb'){
+                $scope.bbbb[index]= final_key;
+            }
             $scope.add_field_go(f_type,f_id,final_key);
         }
         
@@ -60,6 +76,7 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
 
     //查询赋值选项
     $scope.find_option = function(id,from_table){
+        $scope.remove_option();
         $http.get('/fuck/goods/add_goods.php', {params:{field_option:id,from_table:from_table}
         }).success(function(data) {
             if(data==""){

@@ -134,7 +134,7 @@
 												<button uib-popover-template="del_popover.templateUrl"
 														popover-title="{{del_popover.title}}" 
 														popover-trigger="'outsideClick'" 
-														popover-placement="right-bottom"
+														popover-placement="left-bottom"
 														type="button"
 														class="btn btn-danger btn-xs"
 														ng-click="field_key(item.id)">删 除</button>
@@ -155,6 +155,7 @@
 			• 表示不能修改项，双击单元格进行字段修改，再双击保存修改。<br>
 			§ 修改是否必填，1代表必填，0代表非必填。<br>
 			如果已存在数据，修改字段长度，不会影响到原先数据的长度。<br>
+			如果设置<span class="red"> 默认值 </span>，请不要再设置为 <span class="red">必填</span> 属性，因为数据库默认已存在。
 			</div>
 		</div><!-- /pannel -->
 	</div><!-- /col -->
