@@ -4,3 +4,4 @@ test/
 Design/
 *.DS_Store
 down/
+*.xlsx

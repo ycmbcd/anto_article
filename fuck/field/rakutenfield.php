@@ -3,14 +3,14 @@ $dir = dirname(__FILE__);
 require_once($dir."/../header.php");
 
 //查询字段
-if(isset($_GET['select_yahoofield'])){
-    $sql = "SELECT * FROM yahoo_field ORDER BY id";
+if(isset($_GET['select_rakutenfield'])){
+    $sql = "SELECT * FROM rakuten_field ORDER BY id";
     $res = $db->getAll($sql);
     echo json_encode($res);
 }
 //同上，用于字段管理
 if(isset($_GET['select_field'])){
-    $sql = "SELECT * FROM yahoo_field ORDER BY id";
+    $sql = "SELECT * FROM rakuten_field ORDER BY id";
     $res = $db->getAll($sql);
     echo json_encode($res);
 }
@@ -34,7 +34,7 @@ if(isset($_POST['new_field'])){
     $new_field_option = addslashes($new_field_option);
 
     //查询是否已存在
-    $sql = "SELECT * FROM yahoo_field WHERE field_name='{$new_field}'";
+    $sql = "SELECT * FROM rakuten_field WHERE field_name='{$new_field}'";
     $res = $db->getOne($sql);
 
     if(empty($res)){
@@ -44,15 +44,16 @@ if(isset($_POST['new_field'])){
         }else{
             $lengs = "varchar(255)";
         }
-        //插入雅虎字段属性表
-        $sql = "INSERT INTO yahoo_field (field_name,field_type,field_require,field_length,field_info,field_default,field_option) VALUES ('{$new_field}','{$new_field_type}','{$new_field_require}','{$new_field_length}','{$new_field_info}','{$new_field_default}','{$new_field_option}')";
+        //插入乐天字段属性表
+        $sql = "INSERT INTO rakuten_field (field_name,field_type,field_require,field_length,field_info,field_default,field_option) VALUES ('{$new_field}','{$new_field_type}','{$new_field_require}','{$new_field_length}','{$new_field_info}','{$new_field_default}','{$new_field_option}')";
         $res = $db->execute($sql);
         //搜索出字段id
-        $sql = "SELECT id FROM yahoo_field WHERE field_name='{$new_field}'";
+        $sql = "SELECT id FROM rakuten_field WHERE field_name='{$new_field}'";
         $res = $db->getOne($sql);
         $id = $res['id'];
-        //插入商品雅虎字段表
-        $sql = "ALTER table goods_yahoo add column yahoo_{$id} {$lengs} DEFAULT '{$new_field_default}'";
+
+        //插入商品乐天字段表
+        $sql = "ALTER table goods_rakuten add column rakuten_{$id} {$lengs} DEFAULT '{$new_field_default}'";
         $res = $db->execute($sql);
         echo "ok";
     }else{
@@ -67,7 +68,7 @@ if(isset($_POST['change_key'])){
     $id = $_POST['id'];
     $change_key = addslashes($change_key);   //防止SQL注入
     if($field=='field_name'){
-        $sql = "SELECT * FROM yahoo_field WHERE field_name='{$change_key}' AND id<>'{$id}'";
+        $sql = "SELECT * FROM rakuten_field WHERE field_name='{$change_key}' AND id<>'{$id}'";
         $res = $db->getOne($sql);
         if(empty($res)){
 
@@ -76,7 +77,7 @@ if(isset($_POST['change_key'])){
             return false;
         }
     }
-    $sql = "UPDATE yahoo_field SET {$field} = '{$change_key}' WHERE id='{$id}'";
+    $sql = "UPDATE rakuten_field SET {$field} = '{$change_key}' WHERE id='{$id}'";
     $res = $db->execute($sql);
     echo "ok";
 }
@@ -85,10 +86,10 @@ if(isset($_POST['change_key'])){
 if(isset($_POST['del_field_id'])){
     $del_field_id = $_POST['del_field_id'];
     //删除雅虎字段属性表
-    $sql = "DELETE FROM yahoo_field where id='{$del_field_id}'";
+    $sql = "DELETE FROM rakuten_field where id='{$del_field_id}'";
     $res = $db->execute($sql);
     //删除商品雅虎字段表
-    $sql = "ALTER table goods_yahoo drop column yahoo_{$del_field_id}";
+    $sql = "ALTER table goods_rakuten drop column rakuten_{$del_field_id}";
     $res = $db->execute($sql);
     echo "ok";
 }

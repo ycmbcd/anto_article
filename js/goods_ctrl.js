@@ -4,6 +4,8 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
     //初始化
     $scope.aaaa = [];
     $scope.bbbb = [];
+    $scope.cccc = [];
+    $scope.dddd = [];
     $scope.sku_id = "0";    //默认0，数据库无id=0，即使出错也不会影响数据
 
     //跳转下一条
@@ -28,6 +30,14 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
         alert("系统错误，请联系管理员。");
     });
 
+    //遍历乐天字段
+    $http.get('/fuck/field/rakutenfield.php', {params:{select_rakutenfield:"get"}
+    }).success(function(data) {
+        $scope.all_rakutenfield = data;
+    }).error(function(data) {
+        alert("系统错误，请联系管理员。");
+    });
+
     //去掉前后空格
     $scope.trim = function(str){
         return str.replace(/(^\s*)|(\s*$)/g, "");
@@ -40,8 +50,12 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
         //f为点击的值，(f_type是操作的表，f_id为操作表的field_id，此两个字段供保存用),index为input的index
         if(xxxx=='aaaa'){
             var o_value = $scope.aaaa[index];
-        }else if(xxxx='bbbb'){
+        }else if(xxxx=='bbbb'){
             var o_value = $scope.bbbb[index];
+        }else if(xxxx=='cccc'){
+            var o_value = $scope.cccc[index];
+        }else if(xxxx=='dddd'){
+            var o_value = $scope.dddd[index];
         }
         if(typeof(o_value)=='undefined'){   //默认情况下为空，则会undefined，这时重新定义原始值为空
             o_value ='';
@@ -55,8 +69,12 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
             final_key = f;
             if(xxxx=='aaaa'){
                 $scope.aaaa[index]= final_key;
-            }else if(xxxx='bbbb'){
+            }else if(xxxx=='bbbb'){
                 $scope.bbbb[index]= final_key;
+            }else if(xxxx=='cccc'){
+                $scope.cccc[index]= final_key;
+            }else if(xxxx=='dddd'){
+                $scope.dddd[index]= final_key;
             }
             $scope.add_field_go(f_type,f_id,final_key);
         }else{
@@ -68,6 +86,10 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
                 $scope.aaaa[index]= final_key;
             }else if(xxxx='bbbb'){
                 $scope.bbbb[index]= final_key;
+            }else if(xxxx='cccc'){
+                $scope.cccc[index]= final_key;
+            }else if(xxxx='dddd'){
+                $scope.dddd[index]= final_key;
             }
             $scope.add_field_go(f_type,f_id,final_key);
         }
@@ -160,6 +182,24 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
         $scope.yahoo_over = true;
         //取消新建功能
         $scope.new_yahoo = function(){
+            return false;
+        }
+    }
+
+    //新建乐天
+    $scope.new_rakuten = function(id){
+        var sid = 'new_rakuten_'+id;
+        var field_id = 'rakuten_'+id;
+        var dom = document.querySelector('#'+sid);
+        var field_val = angular.element(dom).val();
+        var field_name = 'rakuten';
+        $scope.add_field_go(field_name,field_id,field_val);
+    }
+
+    $scope.submit_rakuten = function(){
+        $scope.rakuten_over = true;
+        //取消新建功能
+        $scope.new_rakuten = function(){
             return false;
         }
     }

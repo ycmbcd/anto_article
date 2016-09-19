@@ -22,6 +22,9 @@ if(isset($_GET['add_sku'])){
         //占位goods_yahoo
         $sql = "INSERT INTO goods_yahoo (sku_id) VALUES ('{$sku_id}')";
         $res = $db->execute($sql);
+        //占位goods_rakuten
+        $sql = "INSERT INTO goods_rakuten (sku_id) VALUES ('{$sku_id}')";
+        $res = $db->execute($sql);
         echo $sku_id;
     }else{
     	echo 'has';
@@ -39,6 +42,8 @@ if(isset($_GET['add_field'])){
         $goods_table = 'goods_common';
     }else if($add_field == 'yahoo'){
         $goods_table = 'goods_yahoo';
+    }else if($add_field == 'rakuten'){
+        $goods_table = 'goods_rakuten';
     }
     //更新表
     $sql = "UPDATE $goods_table SET $field_id='{$field_val}' where sku_id='{$sku_id}'";
