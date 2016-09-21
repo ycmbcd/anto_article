@@ -142,9 +142,47 @@
 							<button ng-disabled="newgood_rakuten.$invalid" type="button" class="btn btn-primary btn-xs btn-next ml20 mt10" ng-click="submit_rakuten()"><i class="glyphicon glyphicon-chevron-down"></i></button>
 						</div>
 					</div>
+					<div ng-show="rakuten_over">
+						<div ng-hide="amazon_over">
+						<hr>
+							<form name="newgood_amazon">
+								<table class="table-condensed" ng-mouseleave="remove_option()">
+									<thead>
+										<div class="label label-warning label_title">亚马逊</div>
+									</thead>
+									<tbody>			
+										<tr class="fu_tr" ng-repeat="item in all_amazonfield track by $index">
+											<td class="tagr f12 requirett_{{item.field_require}}">{{item.field_name}} :</td>
+											<td width="300">
+												<input 	type="text" 
+														class="form-control input-sm"
+														id="new_amazon_{{item.id}}"
+														ng-blur="new_amazon(item.id)"
+														ng-model="dddd[$index]"
+														ng-value="item.field_default"
+														ng-required="{{item.field_require}}"
+														placeholder="长度小于{{item.field_length}}个字符"
+														maxlength="{{item.field_length}}" 
+								                      	ng-maxlength="{{item.field_length}}"
+								                      	ng-click="find_option(item.id,'amazon')"
+								                      	>
+								                      	<!-- <span>{{dddd[$index]}}</span>调试用 -->
+											</td>
+											<td><div class="isrequire_{{item.field_require}} mt10">*</div></td>
+											<td class="mt10 ml10 badge_info">说明：{{item.field_info}}</td>
+											<td class="hidden fuzhi" id="ssamazon{{item.id}}">
+												<input  ng-repeat="oop in field_option track by $index" class="btn btn-xs mr10 ml10 btn-info" ng-class="{'btn-info-no':color.active$index}" type="button" ng-click="fuzhi(oop,'amazon','amazon_'+item.id,'dddd',$parent.$index);color.active$index=!color.active$index" value="{{oop}}" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+							<button ng-disabled="newgood_amazon.$invalid" type="button" class="btn btn-primary btn-xs btn-next ml20 mt10" ng-click="submit_amazon()"><i class="glyphicon glyphicon-chevron-down"></i></button>
+						</div>
+					</div>
 					<div class="row mt20">
 						<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
-					<button  ng-show="rakuten_over" type="button" style="width:100%" class="btn btn-success ml20 mt10" ng-click="next_add()"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp; 再 新 建 一 条</button>
+					<button  ng-show="amazon_over" type="button" style="width:100%" class="btn btn-success ml20 mt10" ng-click="next_add()"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp; 再 新 建 一 条</button>
 						</div>
 					</div>
 				</div>

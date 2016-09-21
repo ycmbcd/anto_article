@@ -210,7 +210,7 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
         var post_data = {table_id:'get',folder_id:$scope.folder_id,tb_name:$scope.tb_name};
         $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
             $scope.table_id = data;
-            var post_data = {show_table:$scope.table_id,start:start,page_size:$scope.pageSize};
+            var post_data = {show_table:$scope.table_id,tpl:$scope.tb_tpl,start:start,page_size:$scope.pageSize};
             $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
                 $scope.show_table = data;
             }).error(function(data) {  
@@ -322,7 +322,7 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
 
     //表格下载
     $scope.down_tb = function(){
-        $http.get('/fuck/table/show_table.php', {params:{down_tb:$scope.tb_name}
+        $http.get('/fuck/table/show_table.php', {params:{down_tb:$scope.tb_name,tpl:$scope.tb_tpl}
         }).success(function(data) {
             if(data=='ok'){
                 window.location="/down/"+$scope.tb_name+".xlsx";

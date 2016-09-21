@@ -446,10 +446,8 @@ app.controller('yahoofieldCtrl', ['$scope','$state','$http', function($scope,$st
         $http.post('/fuck/field/yahoofield.php', post_data).success(function(data) {  
             if(data=='ok'){
                 $scope.plug_alert('success',' 删除完成。','icon-ok');
-                var del = document.querySelector('#line_'+$scope.field_key_click);
-                angular.element(del).remove();  //移除此行
-                var dom = document.querySelector('.popover');
-                angular.element(dom).removeClass('in');  //移除popover
+                var time=new Date().getTime();
+                $state.go('site.amazonfield',{data:time});
             }else{
                 $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
             }
@@ -545,10 +543,106 @@ app.controller('rakutenfieldCtrl', ['$scope','$state','$http', function($scope,$
         $http.post('/fuck/field/rakutenfield.php', post_data).success(function(data) {  
             if(data=='ok'){
                 $scope.plug_alert('success',' 删除完成。','icon-ok');
-                var del = document.querySelector('#line_'+$scope.field_key_click);
-                angular.element(del).remove();  //移除此行
-                var dom = document.querySelector('.popover');
-                angular.element(dom).removeClass('in');  //移除popover
+                var time=new Date().getTime();
+                $state.go('site.amazonfield',{data:time});
+            }else{
+                console.log(data);
+                $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        });  
+    }
+}])
+
+//亚马逊字段
+app.controller('amazonfieldCtrl', ['$scope','$state','$http', function($scope,$state,$http){
+    //查询亚马逊字段
+    $http.get('/fuck/field/amazonfield.php', {params:{select_amazonfield:"get"}
+    }).success(function(data) {
+        $scope.all_amazonfield = data;
+    }).error(function(data) {
+        alert("系统错误，请联系管理员。");
+    });
+
+    //添加亚马逊字段
+    var time=new Date().getTime();
+    var self = this;
+    self.submit = function(){
+        $http.post('/fuck/field/amazonfield.php', self.add).success(function(data) {  
+            if(data=='ok'){
+                $scope.plug_alert('success','字段 '+self.add.new_field+' 新建完成。','icon-ok');
+                $state.go('site.amazonfield',{data:time});
+            }else if(data=='has'){
+                $scope.plug_alert('danger','已包含 '+self.add.new_field+' 字段名，请输入其它的名称。','icon-ban-circle');
+            }else{
+                console.log(data);
+                $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        });  
+    };
+
+    //修改亚马逊字段
+    $scope.change_amazonfield = function(id,field,old_value){
+        var time=new Date().getTime();
+        var sid = field+'_'+id;
+        if(field=='field_type' || field=='id'){
+            $scope.plug_alert('danger','不能修改项','icon-ban-circle');
+        }else{
+            var dom = document.querySelector('#'+sid);
+            if(angular.element(dom).hasClass('red')==1){
+                //修改字段
+                var change_key = angular.element(dom).val();
+                if(field=='field_length' && isNaN(change_key)){
+                    $scope.plug_alert('danger','请输入数字。','icon-ban-circle');
+                    return false;
+                }
+                if(field=="field_require"){
+                    if(change_key!='0' && change_key!='1'){
+                        $scope.plug_alert('danger','输入有误。','icon-ban-circle');
+                        return false;
+                    }
+                }
+                var post_data = {id:id,field:field,change_key:change_key};
+                $http.post('/fuck/field/amazonfield.php', post_data).success(function(data) {  
+                    if(data=='ok'){
+                        $scope.plug_alert('success','字段修改完成。','icon-ok');
+                    }else if(data=='has'){
+                        $scope.plug_alert('danger','该字段名已存在。','icon-ban-circle');
+                        angular.element(dom).val(old_value);
+                    }else{
+                        $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+                    }
+                }).error(function(data) {  
+                    alert("系统错误，请联系管理员。");
+                });  
+                angular.element(dom).attr('readonly','readonly').removeClass('red');
+            }else{
+                //标记编辑中
+                angular.element(dom).removeAttr('readonly').addClass('red');
+            }
+        }
+    }
+
+    //field_key
+    $scope.field_key = function(e){
+        $scope.field_key_click = e;
+    }
+
+    //删除
+    $scope.del_popover = {
+        title: '删除 ?',
+        templateUrl: 'del_popover.html'
+    };
+    $scope.del_field = function(){
+        var post_data = {del_field_id:$scope.field_key_click};
+        $http.post('/fuck/field/amazonfield.php', post_data).success(function(data) {  
+            if(data=='ok'){
+                $scope.plug_alert('success',' 删除完成。','icon-ok');
+                var time=new Date().getTime();
+                $state.go('site.amazonfield',{data:time});
             }else{
                 console.log(data);
                 $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');

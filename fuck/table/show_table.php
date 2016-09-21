@@ -67,12 +67,20 @@ if(isset($_POST['sku_count'])){
 //查询表单
 if(isset($_POST['show_table'])){
     $table_id = $_POST['show_table'];
+    $tpl = $_POST['tpl'];
+    if($tpl == 'yahoo'){
+        $tpl = 'goods_yahoo';
+    }else if($tpl == 'rakuten'){
+        $tpl = 'goods_rakuten';
+    }else if($tpl == 'amazon'){
+        $tpl = 'goods_amazon';
+    }
     $start = $_POST['start'];
     $page_size = $_POST['page_size'];
     $sql = "SELECT my_fields FROM folder_table WHERE id = '{$table_id}'";
     $res = $db->getOne($sql);
     $my_fields = $res['my_fields'];
-    $sql = "SELECT $my_fields FROM goods_common p,goods_yahoo pp,goods_sku ppp WHERE p.sku_id=pp.sku_id AND p.sku_id=ppp.id limit {$start},{$page_size}";
+    $sql = "SELECT $my_fields FROM goods_common p,$tpl pp,goods_sku ppp WHERE p.sku_id=pp.sku_id AND p.sku_id=ppp.id limit {$start},{$page_size}";
     $res = $db->getAll($sql);
     echo json_encode($res);
 }
@@ -80,6 +88,14 @@ if(isset($_POST['show_table'])){
 //下载表单
 if(isset($_GET['down_tb'])){
     $down_tb = $_GET['down_tb'];
+    $tpl = $_GET['tpl'];
+    if($tpl == 'yahoo'){
+        $tpl = 'goods_yahoo';
+    }else if($tpl == 'rakuten'){
+        $tpl = 'goods_rakuten';
+    }else if($tpl == 'amazon'){
+        $tpl = 'goods_amazon';
+    }
     require_once($dir."/./PHPExcel/PHPExcel.php");//引入PHPExcel
     //加大响应
     set_time_limit(0); 
@@ -105,7 +121,7 @@ if(isset($_GET['down_tb'])){
     $arr = explode(',', $my_fields_title);
     $arr2 = array($arr);
 
-    $sql = "SELECT $my_fields FROM goods_common p,goods_yahoo pp,goods_sku ppp WHERE p.sku_id=pp.sku_id AND p.sku_id=ppp.id ";
+    $sql = "SELECT $my_fields FROM goods_common p,$tpl pp,goods_sku ppp WHERE p.sku_id=pp.sku_id AND p.sku_id=ppp.id ";
     $res = $db->getAll($sql);
     $final = array_merge($arr2, $res);
 

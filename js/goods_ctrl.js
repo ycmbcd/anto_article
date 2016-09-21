@@ -38,6 +38,14 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
         alert("系统错误，请联系管理员。");
     });
 
+    //遍历亚马逊字段
+    $http.get('/fuck/field/amazonfield.php', {params:{select_amazonfield:"get"}
+    }).success(function(data) {
+        $scope.all_amazonfield = data;
+    }).error(function(data) {
+        alert("系统错误，请联系管理员。");
+    });
+
     //去掉前后空格
     $scope.trim = function(str){
         return str.replace(/(^\s*)|(\s*$)/g, "");
@@ -84,11 +92,11 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
             final_key = f;
             if(xxxx=='aaaa'){
                 $scope.aaaa[index]= final_key;
-            }else if(xxxx='bbbb'){
+            }else if(xxxx=='bbbb'){
                 $scope.bbbb[index]= final_key;
-            }else if(xxxx='cccc'){
+            }else if(xxxx=='cccc'){
                 $scope.cccc[index]= final_key;
-            }else if(xxxx='dddd'){
+            }else if(xxxx=='dddd'){
                 $scope.dddd[index]= final_key;
             }
             $scope.add_field_go(f_type,f_id,final_key);
@@ -200,6 +208,24 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
         $scope.rakuten_over = true;
         //取消新建功能
         $scope.new_rakuten = function(){
+            return false;
+        }
+    }
+
+    //新建亚马逊
+    $scope.new_amazon = function(id){
+        var sid = 'new_amazon_'+id;
+        var field_id = 'amazon_'+id;
+        var dom = document.querySelector('#'+sid);
+        var field_val = angular.element(dom).val();
+        var field_name = 'amazon';
+        $scope.add_field_go(field_name,field_id,field_val);
+    }
+
+    $scope.submit_amazon = function(){
+        $scope.amazon_over = true;
+        //取消新建功能
+        $scope.new_amazon = function(){
             return false;
         }
     }
