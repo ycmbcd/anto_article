@@ -278,7 +278,6 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
     }
 
     //选择序列字段
-
     $scope.select = function(front,id,name,event){ 
         if(front=="sku"){
             field = id;
@@ -326,6 +325,18 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
         }).success(function(data) {
             if(data=='ok'){
                 window.location="/down/"+$scope.tb_name+".xlsx";
+            }
+        }).error(function(data) {
+            alert("系统错误，请联系管理员。");
+        });
+    }
+
+    //选择下载
+    $scope.down_select_field = function(){
+        var post_data = {down_select_field:$scope.my_select,tpl:$scope.tb_tpl,select_name:$scope.my_select_name};
+        $http.post('/fuck/table/show_table.php', post_data).success(function(data) { 
+            if(data=='ok'){
+                window.location="/down/part_fields.xlsx";
             }
         }).error(function(data) {
             alert("系统错误，请联系管理员。");

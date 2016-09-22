@@ -160,4 +160,76 @@ if(isset($_GET['down_tb'])){
     echo "ok";
 }
 
+//选择下载
+if(isset($_POST['down_select_field'])){
+    $my_fields = $_POST['down_select_field'];
+    $tpl = $_POST['tpl'];
+    $my_fields_title = $_POST['select_name'];
+    if($tpl == 'yahoo'){
+        $tpl = 'goods_yahoo';
+    }else if($tpl == 'rakuten'){
+        $tpl = 'goods_rakuten';
+    }else if($tpl == 'amazon'){
+        $tpl = 'goods_amazon';
+    }
+    require_once($dir."/./PHPExcel/PHPExcel.php");//引入PHPExcel
+    //加大响应
+    set_time_limit(0); 
+    ini_set("memory_limit", "1024M");
+    //制作时间
+    date_default_timezone_set("Asia/Shanghai");
+    $now_time=date("Y-m-d H.i.s");
+    //PHPExcel
+    $objPHPExcel = new PHPExcel();
+    $objSheet = $objPHPExcel->getActiveSheet();
+    $objSheet->setTitle($down_tb.' '.$now_time);//表名
+    $objPHPExcel->getActiveSheet()->getStyle('1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);//前景色
+    $objSheet->getStyle('1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+    $objSheet->getStyle('1')->getFill()->getStartColor()->setRGB('3D3F42');//背景色
+
+    $objSheet->getDefaultRowDimension()->setRowHeight(18);   //单元格高
+    $objSheet->freezePane('A2');//冻结表头
+    //表头
+    $arr = explode(',', $my_fields_title);
+    $arr2 = array($arr);
+
+    $sql = "SELECT $my_fields FROM goods_common p,$tpl pp,goods_sku ppp WHERE p.sku_id=pp.sku_id AND p.sku_id=ppp.id ";
+    $res = $db->getAll($sql);
+    $final = array_merge($arr2, $res);
+
+    //fromArray字符串
+    class PHPExcel_Cell_MyValueBinder extends PHPExcel_Cell_DefaultValueBinder
+        implements PHPExcel_Cell_IValueBinder 
+    { 
+        public function bindValue(PHPExcel_Cell $cell, $value = null) 
+        { 
+            // sanitize UTF-8 strings 
+            if (is_string($value)) { 
+                $value = PHPExcel_Shared_String::SanitizeUTF8($value); 
+            } 
+            // Implement your own override logic 
+            if (is_string($value) && $value[0] == '0') { 
+                $cell->setValueExplicit($value, PHPExcel_Cell_DataType::TYPE_STRING); 
+                return true; 
+            } 
+            // Not bound yet? Use default value parent... 
+            return parent::bindValue($cell, $value); 
+        } 
+    }
+
+    PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_MyValueBinder() );
+
+    //填充内容
+    $objPHPExcel->getActiveSheet()->fromArray(
+        $final,// 赋值的数组
+        NULL, // 忽略的值,不会在excel中显示
+        'A1' // 赋值的起始位置
+    );
+
+    // $objPHPExcel->getActiveSheet()->getColumnDimension()->setAutoSize(true);
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+    $objWriter->save($dir."/../down/part_fields.xlsx");   //保存在服务器
+    echo "ok";
+
+}
 ?>
