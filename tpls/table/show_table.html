@@ -1,3 +1,9 @@
+<style>
+/*隐藏id*/
+.hidden_sku_id{
+	display: none;
+}
+</style>
 <div class="row" id="show_view" style="margin:0;" ng-controller="showtableCtrl">
 	<!-- 工具条开始 -->
 	<nav class="navbar navbar-default tool_bar" role="navigation">
@@ -40,22 +46,23 @@
 							<td ng-repeat="title in table_title">{{title}}</td>
 						</tr>
 					</thead>
-					<tr ng-repeat="item in show_table | filter:key_words track by $index" on-finish-render-filters id="line_{{item.id}}">
+					<tr ng-repeat="item in show_table | filter:key_words track by $index" on-finish-render-filters id="line_{{item.sku_id}}">
 						<td>{{$index+1}}</td>
 						<td ng-repeat="(key, value) in item track by $index" class="hidden_{{key}}">
-							<input 	ng-dblclick="change_yahoofield(item.id,key,value)" 
-									readonly
+							<input 	readonly
 									style="width:300px" 
 									class="form-control input-sm"
-									id="{{key}}_{{item.id}}" 
+									id="{{key}}_{{item.sku_id}}" 
 									value="{{value | field_filter}}"
+									ng-dblclick="change_field(item.sku_id,key,value)"
 									>
 						</td>
 					</tr>
 				</table>
 			</div>
 			<div class="panel-footer">
-				点击 <i class="icon-resize-horizontal"></i> 修正工具条宽度。
+				点击 <i class="icon-resize-horizontal"></i> 修正工具条宽度。<br>
+				双击进行单个字段内容修改。
 			<div class="ycmbcd"></div></div>
 		</div><!-- /pannel -->
 	</div><!-- /col -->

@@ -76,6 +76,15 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        //商品编辑
+        .state('site.editgoods',{
+            url: '/editgoods/{data}',
+            views:{
+                'show@site':{
+                    templateUrl: 'tpls/goods/editgoods.html'
+                }
+            }
+        })
 
     //表管理
         .state('site.show_table',{

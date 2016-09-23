@@ -64,6 +64,19 @@ if(isset($_POST['sku_count'])){
     echo $res['cc'];
 }
 
+//单个字段修改
+if(isset($_POST['change_key'])){
+    $sku_id = $_POST['sku_id'];
+    $field = $_POST['field'];
+    $field_tb = $_POST['field_tb'];
+    $change_key = $_POST['change_key'];
+    $change_key = addslashes($change_key);   //防止SQL注入
+
+    $sql = "UPDATE $field_tb SET {$field} = '{$change_key}' WHERE sku_id='{$sku_id}'";
+    $res = $db->execute($sql);
+    echo "ok";
+}
+
 //查询表单
 if(isset($_POST['show_table'])){
     $table_id = $_POST['show_table'];
@@ -80,7 +93,7 @@ if(isset($_POST['show_table'])){
     $sql = "SELECT my_fields FROM folder_table WHERE id = '{$table_id}'";
     $res = $db->getOne($sql);
     $my_fields = $res['my_fields'];
-    $sql = "SELECT $my_fields FROM goods_common p,$tpl pp,goods_sku ppp WHERE p.sku_id=pp.sku_id AND p.sku_id=ppp.id limit {$start},{$page_size}";
+    $sql = "SELECT p.sku_id,$my_fields FROM goods_common p,$tpl pp,goods_sku ppp WHERE p.sku_id=pp.sku_id AND p.sku_id=ppp.id limit {$start},{$page_size}";
     $res = $db->getAll($sql);
     echo json_encode($res);
 }

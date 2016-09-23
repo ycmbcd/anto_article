@@ -343,6 +343,47 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
         });
     }
 
+    //双击修改
+    $scope.change_field = function(sku_id,field,old_value){
+        // 判断字段类型
+        var field_tb = '';
+        if(field.indexOf('sku') !== -1){
+            $scope.plug_alert('danger','SKU 不能在这里修改。','icon-ban-circle');
+            return false;
+        }else if(field.indexOf('com') !== -1){
+            field_tb ='goods_common';
+        }else if(field.indexOf('yahoo') !== -1){
+            field_tb ='goods_yahoo';
+        }else if(field.indexOf('amazon') !== -1){
+            field_tb ='goods_amazon';
+        }else if(field.indexOf('rakuten') !== -1){
+            field_tb ='goods_rakuten';
+        }
+
+        var time=new Date().getTime();
+        var sid = field+'_'+sku_id;
+
+        var dom = document.querySelector('#'+sid);
+        var change_key = angular.element(dom).val();
+        if(angular.element(dom).hasClass('red')==1){
+            //修改字段
+            var post_data = {sku_id:sku_id,field:field,field_tb:field_tb,change_key:change_key};
+            $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
+                if(data=='ok'){
+                    $scope.plug_alert('success','字段修改完成。','icon-ok');
+                }else{
+                    $scope.plug_alert('danger','系统出错，请联系管理员。','icon-ban-circle');
+                }
+            }).error(function(data) {  
+                alert("系统错误，请联系管理员。");
+            });  
+            angular.element(dom).attr('readonly','readonly').removeClass('red');
+        }else{
+            //标记编辑中
+            angular.element(dom).removeAttr('readonly').addClass('red');
+        }
+
+    }
 
     
 }])
