@@ -231,3 +231,18 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
     }
 
 }])
+
+app.controller('delgoodsCtrl', ['$scope','$state','$http', function($scope,$state,$http){
+    $scope.look_sku = function(){
+        if($scope.user_sku==''){
+            return false;
+        }
+        $http.get('/fuck/goods/del_goods.php', {params:{user_sku:$scope.user_sku}
+        }).success(function(data) {
+            $scope.del_goods = data;
+        }).error(function(data) {
+            alert("系统错误，请联系管理员。");
+        });
+
+    }
+}])

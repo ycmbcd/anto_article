@@ -76,12 +76,12 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        //商品编辑
-        .state('site.editgoods',{
-            url: '/editgoods/{data}',
+        //删除商品
+        .state('site.delgoods',{
+            url: '/delgoods/{data}',
             views:{
                 'show@site':{
-                    templateUrl: 'tpls/goods/editgoods.html'
+                    templateUrl: 'tpls/goods/delgoods.html'
                 }
             }
         })

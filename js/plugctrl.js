@@ -1,6 +1,7 @@
 var app = angular.module('myApp');
 app.controller('plugCtrl', ['$scope','$uibModal','$log', function($scope,$uibModal,$log){
     $scope.ok = "ok";
+
     //手风琴
     $scope.oneAtATime = true;
 
