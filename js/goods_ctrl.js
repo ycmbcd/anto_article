@@ -233,6 +233,22 @@ app.controller('addgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
 }])
 
 app.controller('delgoodsCtrl', ['$scope','$state','$http', function($scope,$state,$http){
+    //重命名
+    $scope.rename_popover = {
+        title: '表单重命名',
+        templateUrl: 'rename_popover.html'
+    };
+    //删除
+    $scope.del_popover = {
+        title: '删除 ?',
+        templateUrl: 'del_popover.html'
+    };
+
+    //table_key
+    $scope.table_key = function(e){
+        $scope.table_key_click = e;
+    }
+
     $scope.look_sku = function(){
         if($scope.user_sku==''){
             return false;
@@ -243,6 +259,47 @@ app.controller('delgoodsCtrl', ['$scope','$state','$http', function($scope,$stat
         }).error(function(data) {
             alert("系统错误，请联系管理员。");
         });
+    }
 
+    //重命名
+    $scope.rename_sku = function(){
+        if($scope.rename_popover.re_sku==undefined || $scope.rename_popover.re_sku==''){
+            return false;
+        }else{
+            $http.get('/fuck/goods/del_goods.php', {params:{re_sku:$scope.rename_popover.re_sku,re_id:$scope.table_key_click}
+            }).success(function(data) {
+                if(data=="ok"){
+                    $scope.plug_alert('success',$scope.rename_popover.re_sku+'重命名完成。','icon-ok');
+                    var dom = document.querySelector('.popover');
+                    angular.element(dom).removeClass('in');  //移除popover
+                    $scope.rename_popover.re_sku = '';
+                    $scope.look_sku();
+                }else if(data=='has'){
+                    $scope.plug_alert('danger','已存在该 SKU。','icon-ban-circle');
+                }else{
+                    $scope.plug_alert('danger','系统错误，请联系管理员。','icon-ban-circle');
+                }
+            }).error(function(data) {
+                alert("系统错误，请联系管理员。");
+            });
+        }
+    }
+
+    //删除
+    $scope.del_sku = function(){
+        $http.get('/fuck/goods/del_goods.php', {params:{del_sku:$scope.table_key_click}
+        }).success(function(data) {
+            if(data=="ok"){
+                $scope.plug_alert('success','删除完成。','icon-ok');
+                var dom = document.querySelector('.popover');
+                angular.element(dom).removeClass('in');  //移除popover
+                $scope.rename_popover.re_sku = '';
+                $scope.look_sku();
+            }else{
+                $scope.plug_alert('danger','系统错误，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {
+            alert("系统错误，请联系管理员。");
+        });
     }
 }])
