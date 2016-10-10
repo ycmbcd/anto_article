@@ -20,6 +20,22 @@ app.controller('loginCtrl', ['$rootScope','$scope','$state','$http',function ($r
     }
 }])
  
+//账号管理
+app.controller('repwdCtrl', ['$rootScope','$scope','$state','$http',function ($rootScope,$scope,$state,$http) {
+    $scope.cg_pwd = function(){
+        var post_data = {change_pwd:$scope.old_pwd,new_pwd:$scope.new_pwd,re_pwd:$scope.re_pwd};
+        $http.post('/fuck/login.php', post_data).success(function(data) {  
+            if(data=='ok'){
+                alert('密码修改完成，请重新登录。');
+                window.location='/fuck/login.php?logout';
+            }else{
+                $scope.plug_alert('danger','输入有误。','icon-ban-circle');
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。") 
+        }); 
+    }
+}])
 
 //面板控制器
 app.controller('siteCtrl', ['$rootScope','$scope','$state','$http', function($rootScope,$scope,$state,$http){
