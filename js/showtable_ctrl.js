@@ -384,6 +384,28 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
         }
 
     }
-
     
+}])
+
+app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$http','$log','$modal',function($scope,$rootScope,$state,$stateParams,$http,$log,$modal){
+
+    //字段修改一
+    $scope.ccg_type_1 = function(){
+        if($scope.cg_type_1==''){
+            $scope.show_1 = false;
+            return false;
+        }
+        if($scope.cg_type_1=='sku'){
+            $scope.show_1 = false;
+            return false;
+        }
+        //查询字段类型
+        var post_data = {cg_type:$scope.cg_type_1};
+        $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
+            $scope.cg_fields_1 = data;
+            $scope.show_1 = true;
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        }); 
+    }
 }])

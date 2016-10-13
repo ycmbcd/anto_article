@@ -109,13 +109,15 @@ if(isset($_GET['down_tb'])){
     }else if($tpl == 'amazon'){
         $tpl = 'goods_amazon';
     }
+
     require_once($dir."/./PHPExcel/PHPExcel.php");//引入PHPExcel
     //加大响应
     set_time_limit(0); 
     ini_set("memory_limit", "1024M");
     //制作时间
     date_default_timezone_set("Asia/Shanghai");
-    $now_time=date("Y-m-d H.i.s");
+    // $now_time = date("Y-m-d H.i.s");
+
     //PHPExcel
     $objPHPExcel = new PHPExcel();
     $objSheet = $objPHPExcel->getActiveSheet();
@@ -244,5 +246,15 @@ if(isset($_POST['down_select_field'])){
     $objWriter->save($dir."/../down/part_fields.xlsx");   //保存在服务器
     echo "ok";
 
+}
+
+//字段修改#########################################################################################################################
+//获取查询字段类型 sku，com，yahoo...
+if(isset($_POST['cg_type'])){
+    $cg_type = $_POST['cg_type'];
+    $cg_type = $cg_type.'_field';
+    $sql = "SELECT id,field_name FROM $cg_type ORDER BY ID";
+    $res = $db->getAll($sql);
+    echo json_encode($res);
 }
 ?>

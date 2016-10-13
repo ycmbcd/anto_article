@@ -19,7 +19,7 @@ app.controller('loginCtrl', ['$rootScope','$scope','$state','$http',function ($r
         }
     }
 }])
- 
+
 //账号管理
 app.controller('repwdCtrl', ['$rootScope','$scope','$state','$http',function ($rootScope,$scope,$state,$http) {
     $scope.cg_pwd = function(){
@@ -285,7 +285,6 @@ app.controller('commonfieldCtrl', ['$scope','$state','$http', function($scope,$s
     });
 
     //添加通用字段
-
     var time=new Date().getTime();
     var self = this;
     self.submit = function(){
