@@ -1,0 +1,99 @@
+<style>
+/*隐藏id*/
+.hidden_sku_id{
+  display: none;
+}
+</style>
+<div class="row" id="show_view" style="margin:0;" ng-controller="showtableCtrl">
+  <!-- 工具条开始 -->
+  <nav class="navbar navbar-default tool_bar" role="navigation">
+    <div class="container-fluid ">
+      <div class="navbar-header">
+        <a href="" class="navbar-brand mr10">编辑商品</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li ng-class="{active: hover1}" ng-mouseenter="hover1 = true" ng-mouseleave="hover1 = false">
+            <a href="" ng-click="fix_width()"><i class="icon-resize-horizontal"></i></a>
+          </li>
+          <li ng-class="{active: hover3}" ng-mouseenter="hover3 = true" ng-mouseleave="hover3 = false" ng-click=""><a href="">字段操作</a></li>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-class="{active: hover4}" ng-mouseenter="hover4 = true" ng-mouseleave="hover4 = false"><a href="">Link</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <!-- 工具条结束 -->
+  <div class="mt70 col-lg-12 fix_box">
+    <div class="panel panel-show fix_panel">
+      <div class="panel-heading">
+        <span class="pointer" data-animation="am-fade-and-slide-top" data-template-url="/modal/show_change_panel.html" bs-modal="modal">条件筛选 </span>
+      </div>
+      <div class="panel-body">
+        <table class="table fix_table">
+          <thead>
+            <tr class="blue">
+              <td>序号</td>
+              <td ng-repeat="title in table_title">{{title}}</td>
+            </tr>
+          </thead>
+          <tr ng-repeat="item in show_table | filter:key_words track by $index" on-finish-render-filters id="line_{{item.sku_id}}">
+            <td>{{$index+1}}</td>
+            <td ng-repeat="(key, value) in item track by $index" class="hidden_{{key}}">
+              <input  readonly
+                  style="width:300px" 
+                  class="form-control input-sm"
+                  id="{{key}}_{{item.sku_id}}" 
+                  value="{{value | field_filter}}"
+                  ng-dblclick="change_field(item.sku_id,key,value)"
+                  >
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="panel-footer">
+        点击 <i class="icon-resize-horizontal"></i> 修正工具条宽度。<br>
+        双击进行单个字段内容修改。
+      <div class="ycmbcd"></div></div>
+    </div><!-- /pannel -->
+  </div><!-- /col -->
+  <nav>
+    <ul class="pagination">
+      <li class="pointer" ng-class="{disabled:pre_overflow}">
+        <a class="pg_s" ng-click="Previous()">
+          <span>&nbsp;上一页</span>
+        </a>
+      </li>
+      <li class="pointer" ng-repeat="page in pageList track by $index" ng-class="{active: isActivePage(page)}" >
+        <a ng-click="selectPage(page)" >{{ page }}</a>
+      </li>
+      <li class="pointer" ng-class="{disabled:next_overflow}">
+        <a ng-click="Next()">
+          <span>下一页</span>
+        </a>
+      </li>
+      <li class="disabled">
+        <a>每页 <input class="page_size tagr" type="number" min="1" ng-model='change_size' ng-value="pageSize" ng-change="change_pageSize()"> 条</a>
+      </li>
+      <li>
+        <a>
+          <select ng-model="selectOption" ng-change="clickOption()" ng-options="c as c for c in pageOption">
+             <option value="">跳转</option>
+          </select>
+        </a>
+      </li>
+      <li class="disabled">
+        <a class="pg_e">Page {{selPage}} / {{pages}}</a><a>共 {{all_num}} 条</a>
+      </li>
+    </ul>
+  </nav>
+  
+</div>

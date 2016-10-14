@@ -1,58 +1,56 @@
 <div class="modal" tabindex="-1" role="dialog" ng-controller="cg_panelCtrl">
-  <div class="modal-dialog" style="width:900px;">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" ng-show="title">
         <button type="button" class="close" ng-click="$hide()">&times;</button>
-        <h4 class="modal-title" ng-bind-html="title">字段操作：{{tb_name}} </h4>
+        <h4 class="modal-title" ng-bind-html="title">条件筛选</h4>
       </div>
       <div class="modal-body">
-        <div class="m10">
-          <div class="red">条件一</div>
-            <div class="row mt10 ml10"> 
-              <div class="col-lg-3 col-md-4">
-                <span class="f10">字段类型</span>
-                <select ng-model="cg_type_1" class="form-control input-sm" ng-change="ccg_type_1()">
-                  <option value="sku">sku</option>
-                  <option value="common">通用字段</option>
-                  <option value="yahoo">雅虎字段</option>
-                  <option value="rakuten">乐天字段</option>
-                  <option value="amazon">亚马逊字段</option>
-                </select>
+        <div class="m10 ml20">
+          <div class="row mt10">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">字段类型</label>
+                <div class="col-sm-10">
+                  <select ng-model="cg_type" class="form-control input-sm" ng-change="ccg_type()">
+                    <option value="sku">sku</option>
+                    <option value="common">通用字段</option>
+                    <option value="yahoo">雅虎字段</option>
+                    <option value="rakuten">乐天字段</option>
+                    <option value="amazon">亚马逊字段</option>
+                  </select>
+                </div>
               </div>
-              {{cg_type}}
-            </div>
-            <div class="row mt10 ml10" ng-show="show_1">
-              <div class="col-lg-3 col-md-4">
-                <span class="f10">选择字段</span>
-                <select class="form-control input-sm" ng-model="cg_field" >
-                  <option value="{{f.id}}" ng-repeat="f in cg_fields_1">{{f.field_name}}</option>
-                </select>
+          </div>
+
+          <div class="row mt10">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">选择字段</label>
+                <div class="col-sm-10">
+                  <select class="form-control input-sm" ng-model="cg_field" >
+                    <option value="{{f.id}}" ng-repeat="f in cg_fields">{{f.field_name}}</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="row mt10 ml10">
-              <div class="col-lg-3 col-md-4">
-                <select ng-model="xxxx" class="form-control input-sm">
-                  <option value="" selected="selected">选择条件...</option>
+          </div>
+
+          <div class="row mt10">
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><select ng-model="xxxx" class="form-control input-sm">
                   <option value="" selected="selected">包含</option>
-                  <option value="" selected="selected">大于</option>
-                  <option value="" selected="selected">小于</option>
-                  <option value="" selected="selected">等于</option>
-                </select>
+                  <option value="">大于</option>
+                  <option value="">小于</option>
+                  <option value="">等于</option>
+                </select></label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control input-sm">
+                </div>
               </div>
-            </div>
-            <div class="row mt10 ml10">
-              <div class="col-lg-3 col-md-4">
-                <input type="text" class="form-control input-sm">
-              </div>
-            </div>
-            <div class="mt10"></div>
-          <hr class="mtb_6">      
+          </div>
           
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" ng-click="sub_myfields();$hide()">保存</button>
-        <button type="button" class="btn btn-primary" ng-click="sub_myfields();$hide()">修改</button>
+        <button type="button" class="btn btn-success" ng-click="add_filterline();$hide()">添加</button>
         <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
       </div>
     </div>
