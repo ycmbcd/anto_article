@@ -389,7 +389,7 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
 
 app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$http','$log','$modal',function($scope,$rootScope,$state,$stateParams,$http,$log,$modal){
 
-    //字段修改一
+    //根据类型获取字段
     $scope.ccg_type = function(){
         if($scope.cg_type==''){
             $scope.show_a = false;
@@ -407,6 +407,13 @@ app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$
         }).error(function(data) {  
             alert("系统错误，请联系管理员。");
         }); 
+    }
+
+    //添加一条过滤
+    $scope.add_filterline = function(){
+        alert($scope.cg_type)
+        alert($scope.cg_field)
+        alert($scope.filter_txt)
     }
 
 }])
