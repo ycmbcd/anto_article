@@ -4,10 +4,18 @@
       <div class="modal-content">
         <div class="modal-header" ng-show="title">
           <button type="button" class="close" ng-click="$hide()">&times;</button>
-          <h4 class="modal-title" ng-bind-html="title">条件筛选</h4>
+          <h4 class="modal-title" ng-bind-html="title">添加筛选</h4>
         </div>
         <div class="modal-body">
           <div class="m10 ml20">
+            <div class="row mt10">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">筛选名</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="filter_name" ng-model='filter_name' required class="form-control input-sm">
+                  </div>
+                </div>
+            </div>
             <div class="row mt10">
                 <div class="form-group">
                   <label class="col-sm-2 control-label">字段类型</label>
@@ -36,11 +44,13 @@
 
             <div class="row mt10">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><select ng-model="xxxx" class="form-control input-sm">
-                    <option value="" selected="selected">包含</option>
-                    <option value="">大于</option>
-                    <option value="">小于</option>
-                    <option value="">等于</option>
+                  <label class="col-sm-2 control-label">
+                  <select name="txt_method" ng-model="txt_method" class="form-control input-sm">
+                    <option value="" selected="selected">请选择</option>
+                    <option value="0">包含</option>
+                    <option value="1">大于</option>
+                    <option value="2">小于</option>
+                    <option value="3">等于</option>
                   </select></label>
                   <div class="col-sm-10">
                     <input type="text" name="filter_txt" ng-model='filter_txt' required class="form-control input-sm">
@@ -51,7 +61,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" ng-disabled="cg_panelForm.cg_type.$pristine || cg_panelForm.cg_field.$pristine || cg_panelForm.filter_txt.$invalid" ng-click="add_filterline();$hide()">添加</button>
+          <button type="button" class="btn btn-success" ng-disabled="cg_panelForm.txt_method.$pristine || cg_panelForm.filter_name.$invalid || cg_panelForm.cg_type.$pristine || cg_panelForm.filter_txt.$invalid" ng-click="add_filterline();$hide()">添加</button>
           <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
         </div>
       </div>

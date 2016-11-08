@@ -21,11 +21,15 @@ if(isset($_GET['change_pageSize'])){
 //查询table_id
 if(isset($_POST['table_id'])){
     $folder_id = $_POST['folder_id'];
-    $tb_name = $_POST['tb_name'];
-    $sql = "SELECT id FROM folder_table WHERE folder_id = '{$folder_id}' AND table_name = '{$tb_name}'";
-    $res = $db->getOne($sql);
-    $id = $res['id'];
-    echo $id;
+    if($folder_id=='0'){
+        echo '0';
+    }else{
+        $tb_name = $_POST['tb_name'];
+        $sql = "SELECT id FROM folder_table WHERE folder_id = '{$folder_id}' AND table_name = '{$tb_name}'";
+        $res = $db->getOne($sql);
+        $id = $res['id'];
+        echo $id;
+    }
 }
 
 //查询tpl
@@ -80,6 +84,17 @@ if(isset($_POST['change_key'])){
 //查询表单
 if(isset($_POST['show_table'])){
     $table_id = $_POST['show_table'];
+    $page_size = $_POST['page_size'];
+    $start = $_POST['start'];
+
+    if($table_id=='0'){ //编辑商品页面
+        $sql = "SELECT sku FROM goods_sku limit {$start},{$page_size}";
+        $res = $db->getAll($sql);
+        echo json_encode($res);
+        die;
+    }
+
+    //模板页面
     $tpl = $_POST['tpl'];
     if($tpl == 'yahoo'){
         $tpl = 'goods_yahoo';
@@ -88,8 +103,7 @@ if(isset($_POST['show_table'])){
     }else if($tpl == 'amazon'){
         $tpl = 'goods_amazon';
     }
-    $start = $_POST['start'];
-    $page_size = $_POST['page_size'];
+
     $sql = "SELECT my_fields FROM folder_table WHERE id = '{$table_id}'";
     $res = $db->getOne($sql);
     $my_fields = $res['my_fields'];
@@ -248,7 +262,6 @@ if(isset($_POST['down_select_field'])){
 
 }
 
-//字段修改#########################################################################################################################
 //获取查询字段类型 sku，com，yahoo...
 if(isset($_POST['cg_type'])){
     $cg_type = $_POST['cg_type'];
@@ -257,4 +270,41 @@ if(isset($_POST['cg_type'])){
     $res = $db->getAll($sql);
     echo json_encode($res);
 }
+
+//字段修改
+if(isset($_POST['add_filter'])){
+    $filter_name = $_POST['add_filter'];
+
+    //查询是否重名
+    $sql = "SELECT * FROM filter_sql WHERE filter_name='{$filter_name}'";
+    $res = $db->getOne($sql);
+
+    if(empty($res)){
+        $cgg_type = $_POST['cgg_type'];
+        $cgg_field = $_POST['cgg_field'];
+        $txt_method = $_POST['txt_method'];
+        $filter_txt = $_POST['filter_txt'];
+        if($txt_method=='0'){   //包含
+            $txt_method = 'like';
+            $filter_txt = '%'.$filter_txt.'%';
+        }else if($txt_method=='1'){ //大于
+            $txt_method = '>';
+        }else if($txt_method=='2'){ //小于
+            $txt_method = '<';
+        }else if($txt_method=='3'){ //等于
+            $txt_method = '=';
+        }
+
+        if($cgg_type == 'sku'){
+            $filter_sql = "";
+            $sql = "INSERT INTO filter_sql(filter_name,filter_sql) VALUES ('$filter_name','SELECT * FROM goods_sku WHERE sku {$txt_method} \'{$filter_txt}\'')";
+            $res = $db->execute($sql);
+            echo $sql;
+        }
+    }else{
+        echo "has";     
+    }
+
+}
+
 ?>

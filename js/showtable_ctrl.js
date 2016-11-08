@@ -199,7 +199,6 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
             alert("系统错误，请联系管理员。");
         });         
     }
-    
 
     //获取序列内容_分页查询
     $scope.to_page = function(page){
@@ -208,9 +207,12 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
 
         //获取此表id
         var post_data = {table_id:'get',folder_id:$scope.folder_id,tb_name:$scope.tb_name};
+        console.log(post_data)
         $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
             $scope.table_id = data;
+            console.log(data)
             var post_data = {show_table:$scope.table_id,tpl:$scope.tb_tpl,start:start,page_size:$scope.pageSize};
+            console.log(post_data)
             $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
                 $scope.show_table = data;
             }).error(function(data) {  
@@ -220,7 +222,6 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
             alert("系统错误，请联系管理员。");
         });           
     }
-
 
     //获取序列标题
     $scope.get_title = function(){    
@@ -411,9 +412,18 @@ app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$
 
     //添加一条过滤
     $scope.add_filterline = function(){
-        alert($scope.cg_type)
-        alert($scope.cg_field)
-        alert($scope.filter_txt)
+        // alert($scope.filter_name)
+        // alert($scope.cg_type)
+        // alert($scope.cg_field)
+        // alert($scope.txt_method)
+        // alert($scope.filter_txt)
+        var post_data = {add_filter:$scope.filter_name,cgg_type:$scope.cg_type,cgg_field:$scope.cg_field,txt_method:$scope.txt_method,filter_txt:$scope.filter_txt};
+        console.log(post_data);
+        $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
+            alert(data)
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        });
     }
 
 }])

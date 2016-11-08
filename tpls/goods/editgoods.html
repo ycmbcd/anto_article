@@ -18,6 +18,13 @@
             <a href="" ng-click="fix_width()"><i class="icon-resize-horizontal"></i></a>
           </li>
           <li ng-class="{active: hover3}" ng-mouseenter="hover3 = true" ng-mouseleave="hover3 = false" ng-click=""><a href="">字段操作</a></li>
+          <li>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> 字段A
+              </label>
+            </div>
+          </li>
         </ul>
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
@@ -35,7 +42,8 @@
   <div class="mt70 col-lg-12 fix_box">
     <div class="panel panel-show fix_panel">
       <div class="panel-heading">
-        <span class="pointer" data-animation="am-fade-and-slide-top" data-template-url="/modal/show_change_panel.html" bs-modal="modal">条件筛选 </span>
+        <span class="pointer" data-animation="am-fade-and-slide-top" data-template-url="/modal/show_change_panel.html" bs-modal="modal">添加筛选 </span> | 
+        <span class="pointer" data-animation="am-fade-and-slide-top" data-template-url="/modal/show_change_panel.html" bs-modal="modal">编辑筛选 </span>
       </div>
       <div class="panel-body">
         <table class="table fix_table">

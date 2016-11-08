@@ -87,7 +87,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
         })
         //编辑商品
         .state('site.editgoods',{
-            url: '/editgoods/{data}',
+            url: '/editgoods/{folder_id}/{tb_name}/{time}',
             views:{
                 'show@site':{
                     templateUrl: 'tpls/goods/editgoods.html'
