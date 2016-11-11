@@ -458,3 +458,12 @@ li{
     width: 20px;
     height: 48px;
 }
+.edit_checkbox{
+	height: 50px;
+	line-height: 50px;
+}
+.edit_checkbox label{
+	margin-right:10px;
+	cursor: pointer;
+	color:#337ab7;
+}

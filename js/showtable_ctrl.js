@@ -385,6 +385,43 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
         }
 
     }
+
+    //查询过滤条件
+    $scope.get_all_filter = function(){
+        var post_data = {get_all_filter:'get'};
+        $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
+            $scope.all_filter = data;
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        }); 
+    }
+    $scope.get_all_filter();
+
+    //勾选打开记忆
+    var dom = document.querySelector('.gou');
+    angular.element(dom).addClass('ycmb');
+    //勾选过滤条件
+    $scope.click_filter = function(e){
+        var dom = document.querySelector('#click_'+e);
+        var is_click = angular.element(dom).hasClass('gou_0');
+
+        if(is_click==true){
+            is_click='1';
+            angular.element(dom).removeClass('gou_0');
+        }else if(is_click==false){
+            is_click='0';
+            angular.element(dom).addClass('gou_0');
+        }
+        var post_data = {click_filter:e,is_click:is_click};
+        $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
+            if(data=='ok'){
+            }else{
+                alert('系统错误，联系管理员。')
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        }); 
+    }
     
 }])
 
@@ -420,7 +457,13 @@ app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$
         var post_data = {add_filter:$scope.filter_name,cgg_type:$scope.cg_type,cgg_field:$scope.cg_field,txt_method:$scope.txt_method,filter_txt:$scope.filter_txt};
         console.log(post_data);
         $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
-            alert(data)
+            // alert(data);
+            if(data=='ok'){
+                var time=new Date().getTime();
+                $state.go('site.editgoods',{time:time});
+            }else if(data=="has"){
+                $scope.plug_alert('danger','已存在此字段名。','icon-ban-circle');
+            }
         }).error(function(data) {  
             alert("系统错误，请联系管理员。");
         });

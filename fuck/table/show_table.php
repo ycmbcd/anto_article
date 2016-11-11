@@ -88,10 +88,31 @@ if(isset($_POST['show_table'])){
     $start = $_POST['start'];
 
     if($table_id=='0'){ //编辑商品页面
-        $sql = "SELECT sku FROM goods_sku limit {$start},{$page_size}";
-        $res = $db->getAll($sql);
-        echo json_encode($res);
-        die;
+        // //刷新筛选为不选中
+        // $sql = "UPDATE filter_sql SET is_click='0'";
+        // $res = $db->execute($sql);
+        //查询是否有筛选
+        $sql = "SELECT count(1) FROM filter_sql WHERE is_click='1'";
+        $res = $db->getOne($sql);
+        if(empty($res)){
+            //如果没有筛选，则输出所有的sku
+            $sql = "SELECT sku FROM goods_sku limit {$start},{$page_size}";
+            $res = $db->getAll($sql);
+            echo json_encode($res);
+            die;
+        }
+        else{
+            $sql = "SELECT sku FROM goods_sku limit {$start},{$page_size}";
+            $res = $db->getAll($sql);
+            echo json_encode($res);
+            die;
+            //如果有筛选，则从筛选条件来筛选sku
+            // $sql = "SELECT filter_sql FROM filter_sql WHERE is_click='1'";
+            // $res = $db->getAll($sql);
+            // foreach ($res as $val) {
+            //     $
+            // }
+        }
     }
 
     //模板页面
@@ -293,18 +314,46 @@ if(isset($_POST['add_filter'])){
             $txt_method = '<';
         }else if($txt_method=='3'){ //等于
             $txt_method = '=';
+            $filter_txt = '"'.$filter_txt.'"';
         }
 
         if($cgg_type == 'sku'){
-            $filter_sql = "";
             $sql = "INSERT INTO filter_sql(filter_name,filter_sql) VALUES ('$filter_name','SELECT * FROM goods_sku WHERE sku {$txt_method} \'{$filter_txt}\'')";
             $res = $db->execute($sql);
-            echo $sql;
+            echo "ok";
+        }else{
+            $tt_table = 'goods_'.$cgg_type;
+            $tt_field = $cgg_type.'_'.$cgg_field;
+            $sql = "INSERT INTO filter_sql(filter_name,filter_sql) VALUES ('$filter_name','SELECT * FROM {$tt_table} WHERE {$tt_field} {$txt_method} {$filter_txt}')";
+            $res = $db->execute($sql);
+            echo "ok";
         }
+
+
     }else{
         echo "has";     
     }
 
 }
 
+//查询过滤条件
+if(isset($_POST['get_all_filter'])){
+    $sql = "SELECT * FROM filter_sql ORDER BY id";
+    $res = $db->getAll($sql);
+    echo json_encode($res);
+}
+
+//点击过滤条件
+if(isset($_POST['click_filter'])){
+    $click_filter = $_POST['click_filter'];
+    $is_click = $_POST['is_click'];
+    if($is_click=='1'){
+        $sql = "UPDATE filter_sql SET is_click='1' WHERE id='{$click_filter}'";
+    }else if($is_click=='0'){
+        $sql = "UPDATE filter_sql SET is_click='0' WHERE id='{$click_filter}'";
+    }
+    $res = $db->execute($sql);
+    echo 'ok';
+    
+}
 ?>
