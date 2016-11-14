@@ -41,7 +41,7 @@
           <thead>
             <tr class="blue">
               <td>序号</td>
-              <td ng-repeat="title in table_title">{{title}}</td>
+              <td>SKU</td>
             </tr>
           </thead>
           <tr ng-repeat="item in show_table | filter:key_words track by $index" on-finish-render-filters id="line_{{item.sku_id}}">

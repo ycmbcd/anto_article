@@ -63,9 +63,25 @@ if(isset($_POST['table_title'])){
 
 //查询sku总数
 if(isset($_POST['sku_count'])){
-    $sql = "SELECT count(1) as cc FROM goods_sku";
-    $res = $db->getOne($sql);
-    echo $res['cc'];
+    $table_id = $_POST['sku_count'];
+    if($table_id=='edit'){//编辑页面
+        //判断是否有筛选过滤
+        $sql = "SELECT count(1) as bcd FROM filter_sql WHERE is_click='1'";
+        $res = $db->getOne($sql);
+        $click_count = $res['bcd'];
+        if(empty($click_count) or $click_count=='0'){
+            $sql1 = "SELECT count(1) as cc FROM goods_sku";
+        }else{
+            $sql1 = "SELECT count(1) as cc FROM goods_sku WHERE is_click='1'";
+        }
+        $res1 = $db->getOne($sql1);
+        echo $res1['cc'];
+    }else{
+        $sql = "SELECT count(1) as cc FROM goods_sku";
+        $res = $db->getOne($sql);
+        echo $res['cc'];
+    }
+    
 }
 
 //单个字段修改
@@ -87,14 +103,15 @@ if(isset($_POST['show_table'])){
     $page_size = $_POST['page_size'];
     $start = $_POST['start'];
 
-    if($table_id=='0'){ //编辑商品页面
-        // //刷新筛选为不选中
-        // $sql = "UPDATE filter_sql SET is_click='0'";
-        // $res = $db->execute($sql);
+    if($table_id == '0'){ //编辑商品页面
+        //重置勾选sku
+        $sql0 = "UPDATE goods_sku SET is_click='0'";
+        $res0 = $db->execute($sql0);
         //查询是否有筛选
-        $sql = "SELECT count(1) FROM filter_sql WHERE is_click='1'";
+        $sql = "SELECT count(1) as bcd FROM filter_sql WHERE is_click='1'";
         $res = $db->getOne($sql);
-        if(empty($res)){
+        $click_count = $res['bcd'];
+        if(empty($click_count) or $click_count=='0'){
             //如果没有筛选，则输出所有的sku
             $sql = "SELECT sku FROM goods_sku limit {$start},{$page_size}";
             $res = $db->getAll($sql);
@@ -102,16 +119,27 @@ if(isset($_POST['show_table'])){
             die;
         }
         else{
-            $sql = "SELECT sku FROM goods_sku limit {$start},{$page_size}";
+            //如果有筛选，则从筛选条件来筛选sku
+
+            $sql = "SELECT concat(filter_sql,' and ') as ycm FROM filter_sql WHERE is_click='1'";
             $res = $db->getAll($sql);
+            $sql_line = '';
+            foreach ($res as $value) {
+                $sql_line = $sql_line.$value['ycm'];
+            }   
+            $sql_line = rtrim($sql_line, " and ");
+
+            $sql = "SELECT goods_sku.sku FROM goods_sku inner join goods_yahoo on goods_sku.id=goods_yahoo.sku_id inner join goods_amazon on goods_sku.id=goods_amazon.id WHERE $sql_line limit {$start},{$page_size}";
+            $res = $db->getAll($sql);
+
+            //勾选sku
+
+            $sql1 = "UPDATE goods_sku inner join goods_yahoo on goods_sku.id=goods_yahoo.sku_id inner join goods_amazon on goods_sku.id=goods_amazon.id SET goods_sku.is_click = '1' WHERE $sql_line";
+            $res1 = $db->execute($sql1);
+
+            //输出结果
             echo json_encode($res);
             die;
-            //如果有筛选，则从筛选条件来筛选sku
-            // $sql = "SELECT filter_sql FROM filter_sql WHERE is_click='1'";
-            // $res = $db->getAll($sql);
-            // foreach ($res as $val) {
-            //     $
-            // }
         }
     }
 
@@ -318,13 +346,14 @@ if(isset($_POST['add_filter'])){
         }
 
         if($cgg_type == 'sku'){
-            $sql = "INSERT INTO filter_sql(filter_name,filter_sql) VALUES ('$filter_name','SELECT * FROM goods_sku WHERE sku {$txt_method} \'{$filter_txt}\'')";
+            $sql = "INSERT INTO filter_sql(filter_name,filter_sql) VALUES ('$filter_name','goods_sku.sku {$txt_method} \'{$filter_txt}\'')";
             $res = $db->execute($sql);
             echo "ok";
         }else{
             $tt_table = 'goods_'.$cgg_type;
             $tt_field = $cgg_type.'_'.$cgg_field;
-            $sql = "INSERT INTO filter_sql(filter_name,filter_sql) VALUES ('$filter_name','SELECT * FROM {$tt_table} WHERE {$tt_field} {$txt_method} {$filter_txt}')";
+            // $sql = "INSERT INTO filter_sql(filter_name,filter_sql) VALUES ('$filter_name','SELECT * FROM {$tt_table} WHERE {$tt_field} {$txt_method} {$filter_txt}')";
+            $sql = "INSERT INTO filter_sql(filter_name,filter_sql) VALUES ('$filter_name','{$tt_table}.{$tt_field} {$txt_method} {$filter_txt}')";
             $res = $db->execute($sql);
             echo "ok";
         }

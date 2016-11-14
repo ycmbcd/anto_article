@@ -68,7 +68,7 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
 
     //查询总数_分页组件
     $scope.get_count = function(){
-        var post_data = {sku_count:'get'};
+        var post_data = {sku_count:$scope.tb_name};
         $http.post('/fuck/table/show_table.php', post_data).success(function(data) { 
             //数据获取总数
             $scope.all_num = data;
@@ -215,6 +215,7 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
             console.log(post_data)
             $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
                 $scope.show_table = data;
+                console.log(data);
             }).error(function(data) {  
                 alert("系统错误，请联系管理员。");
             });
@@ -411,10 +412,13 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
         }else if(is_click==false){
             is_click='0';
             angular.element(dom).addClass('gou_0');
+            
         }
         var post_data = {click_filter:e,is_click:is_click};
         $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
             if(data=='ok'){
+                $scope.to_page(1);  //先查询
+                $scope.user_pageSize(); //再查数
             }else{
                 alert('系统错误，联系管理员。')
             }
@@ -457,8 +461,7 @@ app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$
         var post_data = {add_filter:$scope.filter_name,cgg_type:$scope.cg_type,cgg_field:$scope.cg_field,txt_method:$scope.txt_method,filter_txt:$scope.filter_txt};
         console.log(post_data);
         $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
-            // alert(data);
-            if(data=='ok'){
+            if(data=='ok'){ 
                 var time=new Date().getTime();
                 $state.go('site.editgoods',{time:time});
             }else if(data=="has"){
