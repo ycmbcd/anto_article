@@ -1,6 +1,6 @@
 <style>
 /*隐藏id*/
-.hidden_sku_id{
+.hidden_id{
   display: none;
 }
 </style>
@@ -44,17 +44,17 @@
               <td>SKU</td>
             </tr>
           </thead>
-          <tr ng-repeat="item in show_table | filter:key_words track by $index" on-finish-render-filters id="line_{{item.sku_id}}">
+          <tr ng-repeat="item in show_table | filter:key_words track by $index" on-finish-render-filters id="line_{{item.id}}">
             <td>{{$index+1}}</td>
             <td ng-repeat="(key, value) in item track by $index" class="hidden_{{key}}">
               <input  readonly
-                  style="width:300px" 
-                  class="form-control input-sm"
-                  id="{{key}}_{{item.sku_id}}" 
+                  style="width:400px" 
+                  class="form-control input-sm pull-left mr10"
+                  id="{{key}}_{{item.id}}" 
                   value="{{value | field_filter}}"
-                  ng-dblclick="change_field(item.sku_id,key,value)"
+                  ng-dblclick="change_field(item.id,key,value)"
                   >
-            </td>
+              <button data-animation="am-fade-and-slide-top" data-template-url="/modal/show_change_panel.html" bs-modal="modal" class="btn btn-sm btn-default pull-left" ng-click="sku_info(item.id,value);all_title()">详 情</button></td>
           </tr>
         </table>
       </div>

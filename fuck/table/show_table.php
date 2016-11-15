@@ -113,14 +113,13 @@ if(isset($_POST['show_table'])){
         $click_count = $res['bcd'];
         if(empty($click_count) or $click_count=='0'){
             //如果没有筛选，则输出所有的sku
-            $sql = "SELECT sku FROM goods_sku limit {$start},{$page_size}";
+            $sql = "SELECT id,sku FROM goods_sku limit {$start},{$page_size}";
             $res = $db->getAll($sql);
             echo json_encode($res);
             die;
         }
         else{
             //如果有筛选，则从筛选条件来筛选sku
-
             $sql = "SELECT concat(filter_sql,' and ') as ycm FROM filter_sql WHERE is_click='1'";
             $res = $db->getAll($sql);
             $sql_line = '';
@@ -129,12 +128,11 @@ if(isset($_POST['show_table'])){
             }   
             $sql_line = rtrim($sql_line, " and ");
 
-            $sql = "SELECT goods_sku.sku FROM goods_sku inner join goods_yahoo on goods_sku.id=goods_yahoo.sku_id inner join goods_amazon on goods_sku.id=goods_amazon.id WHERE $sql_line limit {$start},{$page_size}";
+            $sql = "SELECT goods_sku.id,goods_sku.sku FROM goods_sku inner join goods_common on goods_sku.id=goods_common.id inner join goods_yahoo on goods_sku.id=goods_yahoo.sku_id inner join goods_amazon on goods_sku.id=goods_amazon.id inner join goods_rakuten on goods_sku.id=goods_rakuten.id WHERE $sql_line limit {$start},{$page_size}";
             $res = $db->getAll($sql);
 
             //勾选sku
-
-            $sql1 = "UPDATE goods_sku inner join goods_yahoo on goods_sku.id=goods_yahoo.sku_id inner join goods_amazon on goods_sku.id=goods_amazon.id SET goods_sku.is_click = '1' WHERE $sql_line";
+            $sql1 = "UPDATE goods_sku inner join goods_common on goods_sku.id=goods_common.id inner join goods_yahoo on goods_sku.id=goods_yahoo.sku_id inner join goods_amazon on goods_sku.id=goods_amazon.id inner join goods_rakuten on goods_sku.id=goods_rakuten.id SET goods_sku.is_click = '1' WHERE $sql_line";
             $res1 = $db->execute($sql1);
 
             //输出结果
@@ -157,6 +155,21 @@ if(isset($_POST['show_table'])){
     $res = $db->getOne($sql);
     $my_fields = $res['my_fields'];
     $sql = "SELECT p.sku_id,$my_fields FROM goods_common p,$tpl pp,goods_sku ppp WHERE p.sku_id=pp.sku_id AND p.sku_id=ppp.id limit {$start},{$page_size}";
+    $res = $db->getAll($sql);
+    echo json_encode($res);
+}
+
+//查询单个sku标题
+if(isset($_POST['all_title'])){
+    $sql = "SELECT field_name FROM common_field UNION SELECT field_name FROM yahoo_field UNION SELECT field_name FROM rakuten_field UNION SELECT field_name FROM amazon_field";
+    $res = $db->getAll($sql);
+    echo json_encode($res);
+}
+
+//查询单个sku所有信息
+if(isset($_POST['sku_info'])){
+    $sku_id = $_POST['sku_info'];
+    $sql = "SELECT * FROM goods_common,goods_yahoo,goods_rakuten,goods_amazon WHERE goods_common.sku_id='{$sku_id}' and goods_yahoo.sku_id='{$sku_id}' and goods_rakuten.sku_id='{$sku_id}' and goods_amazon.sku_id='{$sku_id}'";
     $res = $db->getAll($sql);
     echo json_encode($res);
 }

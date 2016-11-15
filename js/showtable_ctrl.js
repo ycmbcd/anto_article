@@ -427,6 +427,28 @@ app.controller('showtableCtrl', ['$scope','$rootScope','$state','$stateParams','
         }); 
     }
     
+    //查看商品详情
+    $scope.sku_info = function(e,f){
+        $scope.show_sku_id = e;
+        $scope.show_sku_name = f;
+        var post_data = {sku_info:e};
+        $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
+            $scope.show_sku_info = data;
+            console.log(data);
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        }); 
+    }
+
+    //查询所有title
+    $scope.all_title = function(){
+        var post_data = {all_title:'get'};
+        $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
+            $scope.show_all_title = data;
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        }); 
+    }
 }])
 
 app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$http','$log','$modal',function($scope,$rootScope,$state,$stateParams,$http,$log,$modal){
