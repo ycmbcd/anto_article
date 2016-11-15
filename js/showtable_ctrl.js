@@ -459,7 +459,7 @@ app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$
         // alert($scope.txt_method)
         // alert($scope.filter_txt)
         var post_data = {add_filter:$scope.filter_name,cgg_type:$scope.cg_type,cgg_field:$scope.cg_field,txt_method:$scope.txt_method,filter_txt:$scope.filter_txt};
-        console.log(post_data);
+        // console.log(post_data);
         $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
             if(data=='ok'){ 
                 var time=new Date().getTime();
@@ -472,4 +472,18 @@ app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$
         });
     }
 
+    //删除一条过滤
+    $scope.del_filter = function(){
+        var post_data = {del_filter:$scope.del_key};
+        $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
+            if(data=='ok'){
+                var time=new Date().getTime();
+                $state.go('site.editgoods',{time:time});
+            }else{
+                $scope.plug_alert('danger','系统错误，请联系管理员。','icon-ban-circle');
+            }
+        }).error(function(data) {  
+            alert("系统错误，请联系管理员。");
+        });
+    }
 }])

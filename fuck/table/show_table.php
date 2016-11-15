@@ -383,6 +383,14 @@ if(isset($_POST['click_filter'])){
     }
     $res = $db->execute($sql);
     echo 'ok';
-    
 }
+
+//删除过滤条件
+if(isset($_POST['del_filter'])){
+    $filter_id = $_POST['del_filter'];
+    $sql = "DELETE FROM filter_sql WHERE id='{$filter_id}'";
+    $res = $db->execute($sql);
+    echo 'ok';
+}
+
 ?>

@@ -1,0 +1,30 @@
+<div class="modal" tabindex="-1" role="dialog" ng-controller="cg_panelCtrl">
+  <div class="modal-dialog">
+    <form name="cg_panelForm">
+      <div class="modal-content">
+        <div class="modal-header" ng-show="title">
+          <button type="button" class="close" ng-click="$hide()">&times;</button>
+          <h4 class="modal-title" ng-bind-html="title">删除筛选</h4>
+        </div>
+        <div class="modal-body">
+          <div class="m10 ml20">
+            <div class="row mt10">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">筛选名</label>
+                  <div class="col-sm-10">
+                    <select ng-model="del_key" name="cg_type" class="form-control input-sm" ng-change="ccg_type()">
+                      <option ng-repeat="item in all_filter" value="{{item.id}}">{{item.filter_name}}</option>
+                    </select>
+                  </div>
+                </div>
+            </div>  
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" ng-disabled="cg_panelForm.txt_method.$pristine || cg_panelForm.filter_name.$invalid || cg_panelForm.cg_type.$pristine || cg_panelForm.filter_txt.$invalid" ng-click="del_filter();$hide()">删除</button>
+          <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
