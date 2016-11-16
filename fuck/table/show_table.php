@@ -406,4 +406,21 @@ if(isset($_POST['del_filter'])){
     echo 'ok';
 }
 
+//批处理
+if(isset($_POST['batch_field'])){
+    $cgg_type = $_POST['cgg_type'];
+    $cgg_field = $_POST['cgg_field'];
+    $txt_method = $_POST['txt_method'];
+    $origin_txt = $_POST['origin_txt'];
+    $new_txt = $_POST['new_txt'];
+    //如果是sku修改
+    if($cgg_type == 'sku'){
+        echo 'sku';
+    }else{
+
+    }
+    // $sql = "";
+    // $res = $db->execute($sql);
+    // echo 'ok';
+}
 ?>

@@ -1,0 +1,71 @@
+<div class="modal" tabindex="-1" role="dialog" ng-controller="cg_panelCtrl">
+  <div class="modal-dialog">
+    <form name="cg_panelForm">
+      <div class="modal-content">
+        <div class="modal-header" ng-show="title">
+          <button type="button" class="close" ng-click="$hide()">&times;</button>
+          <h4 class="modal-title" ng-bind-html="title">批处理</h4>
+        </div>
+        <div class="modal-body">
+          <div class="m10 ml20">
+            <div class="row mt10">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">字段类型</label>
+                  <div class="col-sm-10">
+                    <select ng-model="cg_type" name="cg_type" class="form-control input-sm" ng-change="ccg_type()">
+                      <option value="sku">sku</option>
+                      <option value="common">通用字段</option>
+                      <option value="yahoo">雅虎字段</option>
+                      <option value="rakuten">乐天字段</option>
+                      <option value="amazon">亚马逊字段</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row mt10" ng-show="show_a">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">选择字段</label>
+                  <div class="col-sm-10">
+                    <select class="form-control input-sm" name="cg_field" ng-model="cg_field" >
+                      <option value="{{f.id}}" ng-repeat="f in cg_fields">{{f.field_name}}</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row mt10">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">
+                  <select name="txt_method" ng-model="txt_method" class="form-control input-sm">
+                    <option value="" selected="selected">替换</option>
+                    <option value="2">等于</option>
+                    <option value="3">乘以</option>
+                    <option value="4">加</option>
+                    <option value="5">减</option>
+                  </select></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="origin_txt" ng-model='origin_txt' required class="form-control input-sm">
+                  </div>
+                  
+                </div>
+            </div>
+            
+            <div class="row mt10" ng-hide="txt_method">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">替换后</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="new_txt" ng-model='new_txt' required class="form-control input-sm">
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" ng-disabled="cg_panelForm.filter_name.$invalid || cg_panelForm.cg_type.$pristine || cg_panelForm.origin_txt.$invalid" ng-click="batch_field();$hide()">修改</button>
+          <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
