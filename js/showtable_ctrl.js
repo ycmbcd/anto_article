@@ -520,16 +520,19 @@ app.controller('cg_panelCtrl', ['$scope','$rootScope','$state','$stateParams','$
         var post_data = {batch_field:'exe',cgg_type:$scope.cg_type,cgg_field:$scope.cg_field,txt_method:$scope.txt_method,origin_txt:$scope.origin_txt,new_txt:$scope.new_txt};
         console.log(post_data);
         $http.post('/fuck/table/show_table.php', post_data).success(function(data) {  
-            alert(data)
             if(data=='ok'){
-                $scope.plug_alert('success','批处理完成。','icon-ban-circle');
+                $scope.plug_alert('success','批处理完成。','icon-ok');
                 var time=new Date().getTime();
                 $state.go('site.editgoods',{time:time});
+            }else if(data == 'stop'){
+                $scope.plug_alert('danger','SKU只能进行替换操作。','icon-ban-circle');
             }else{
-                $scope.plug_alert('danger','系统错误，请联系管理员。','icon-ban-circle');
+                $scope.plug_alert('danger','系统错误，可能SKU产生重复，或联系管理员。','icon-ban-circle');
+                alert(data)
             }
         }).error(function(data) {  
             alert("系统错误，请联系管理员。");
+            alert(data)
         });
     }
 }])

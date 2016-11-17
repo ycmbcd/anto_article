@@ -413,14 +413,42 @@ if(isset($_POST['batch_field'])){
     $txt_method = $_POST['txt_method'];
     $origin_txt = $_POST['origin_txt'];
     $new_txt = $_POST['new_txt'];
-    //如果是sku修改
+    
+    //如果是sku
     if($cgg_type == 'sku'){
-        echo 'sku';
+        $cgg_type = 'goods_'.$cgg_type;
+        //sku只能替换操作
+        if($txt_method!=='undefined'){
+            echo "stop";
+        }else{
+            $sql = "UPDATE $cgg_type SET sku = REPLACE(sku,'{$origin_txt}','{$new_txt}') WHERE is_click='1'";
+            $res = $db->execute($sql);
+            echo 'ok';
+        }
     }else{
-
+        //如果是undefined，则为替换
+        $cgg_field = $cgg_type.'_'.$cgg_field;
+        $cgg_type = 'goods_'.$cgg_type;
+        if($txt_method == 'undefined'){
+            $sql = "UPDATE $cgg_type SET $cgg_field = REPLACE($cgg_field,'{$origin_txt}','{$new_txt}') WHERE sku_id IN (SELECT id FROM goods_sku WHERE is_click='1')";
+            $res = $db->execute($sql);
+            echo 'ok';
+        }else if($txt_method == '1'){ 
+            //1为等于，全部赋值
+            $sql = "UPDATE $cgg_type SET $cgg_field = $origin_txt WHERE sku_id IN (SELECT id FROM goods_sku WHERE is_click='1')";
+            $res = $db->execute($sql);
+            echo 'ok';
+        }else{
+            //否则进行加乘运算
+            if($txt_method == '2'){
+                $txt_method = '*';
+            }else if($txt_method == '3'){
+                $txt_method = '+';
+            };
+            $sql = "UPDATE $cgg_type SET $cgg_field = $cgg_field $txt_method $origin_txt WHERE sku_id IN (SELECT id FROM goods_sku WHERE is_click='1')";
+            $res = $db->execute($sql);
+            echo 'ok';
+        }
     }
-    // $sql = "";
-    // $res = $db->execute($sql);
-    // echo 'ok';
 }
 ?>
