@@ -18,10 +18,10 @@
 				新建商品<i class="pull-right icon-plus"></i>
 			</div>
 			<div ui-sref="site.delgoods" ui-sref-active="active" class="list-group-item">
-				重命名删除SKU<i class="pull-right icon-edit"></i>
+				重命名删除SKU<i class="pull-right icon-trash"></i>
 			</div>
 			<div ui-sref="site.editgoods({folder_id:'0',tb_name:'edit'})" ui-sref-active="active" class="list-group-item">
-				编辑商品<i class="pull-right icon-edit"></i>
+				编辑商品<i class="pull-right icon-pencil"></i>
 			</div>
 		</div>
 		<div ng-repeat="folder_table in folder_all">
@@ -69,7 +69,7 @@
 			<div ui-sref="site.sysuser" ui-sref-active="active" class="list-group-item">
 				账号管理<i class="pull-right icon-user" ></i>
 			</div>
-			<div ui-sref="site.syscopy" ui-sref-active="active" class="list-group-item">
+			<!-- <div ui-sref="site.syscopy" ui-sref-active="active" class="list-group-item">
 				系统备份<i class="pull-right icon-save" ></i>
 			</div>
 			<div ui-sref="site.syslog" ui-sref-active="active" class="list-group-item">
@@ -77,11 +77,11 @@
 			</div>
 			<div ui-sref="site.modal" ui-sref-active="active" class="list-group-item">
 				轮子<i class="pull-right icon-magic" ></i>
-			</div>
+			</div> -->
 		</div>
 	</uib-accordion>
 
-	<div class="toggler">
+	<div class="toggler hidden">
 		<span class="glyphicon glyphicon-chevron-right">&nbsp;</span> <span class="glyphicon glyphicon-chevron-left">&nbsp;</span>
 	</div>
 </div>

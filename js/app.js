@@ -56,7 +56,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 
         .state('site', {
             url: '/site',
-            data : { pageTitle: 'site' },
+            data : { pageTitle: 'ANTO-商品' },
             views: {
                 '': {
                     templateUrl: 'tpls/site.html'

@@ -6,6 +6,7 @@ app.controller('loginCtrl', ['$rootScope','$scope','$state','$http',function ($r
         var post_data = {u_num:$scope.u_num,u_pwd:$scope.u_pwd};
         if($scope.loginForm.$valid){
             $http.post('/fuck/login.php', post_data).success(function(data) {  
+                console.log(data)
                 if(data=='go'){
                     $state.go('site');  //跳转到main
                 }else{
